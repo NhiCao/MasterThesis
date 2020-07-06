@@ -23,7 +23,7 @@
 \studentnumber{6612180092-7}
 \doctitle{\mastersthesis}
 \major{\engineering}
-\title{Data Evaluation and Cleaning for Improving TTS Voices Trained on Crowdsourced Corpora}
+\title{Data Evaluation and Cleaning for Improving TTS Voices Trained on Crowdsourced Datasets}
 \author{CAO Hai Nhi}
 % CHANGE year XXXXX
 \syear{2020}
@@ -35,16 +35,16 @@
 %   （姓と名，名と称号の間に空白を入れて下さい）
 \ecmembers{Professor Yoichi Yamashita}{}{}{}			% ２人の場合
 %
-\etitle{Data Evaluation and Cleaning for Improving TTS Voices Trained on Crowdsourced Corpora}
+\etitle{Data Evaluation and Cleaning for Improving TTS Voices Trained on Crowdsourced Datasets}
 \eauthor{CAO Hai Nhi}
 % キーワード５-６個 (in LaTeX)
-\ekeywords{speech synthesis, data evaluation, data cleaning, crowdsourced corpora}
+\ekeywords{speech synthesis, data evaluation, data cleaning, crowdsourced datasets}
 %
 % 内容梗概 (in LaTeX)
 
 % 1ページに収めることが望ましい
 \eabstract{
-Usually, to synthesize a high-quality voice, it is required to have a dataset which is recorded by a professional speaker using high-quality equipment under carefully controlled conditions. The creation of such a dataset costs a lot of time, effort, and expense. In order to reduce the cost, my research tries to use a crowdsourced corpus which is created by many non-professional speakers recording their voices and contributing via Internet. This data is often recorded in normal conditions using low-cost devices such as mobile phones and laptop microphones, so it often suffers from containing noise, bad pronunciation, and inconsistent settings. My research deals with these problems by evaluating the data and performing data cleaning before using it to train speech synthesis systems. The ultimate goal is to improve the quality of voices synthesized from such low-cost datasets.
+Usually, to synthesize a high-quality voice, it is required to have a dataset which is recorded by a professional speaker using high-quality equipment under carefully controlled conditions. The creation of such a dataset costs a lot of time, effort, and expense. In order to reduce the cost, my research tries to use a crowdsourced dataset which is created by many non-professional speakers recording their voices and contributing via Internet. This data is often recorded in normal conditions using low-cost devices such as mobile phones and laptop microphones, so it often suffers from containing noise, bad pronunciation, and inconsistent settings. My research deals with these problems by evaluating the data and performing data cleaning before using it to train speech synthesis systems. The ultimate goal is to improve the quality of voices synthesized from such low-cost datasets.
 
 In our work, we aim to address three problems. First, we investigate what factors affecting the quality of synthetic voices. Second, we evaluate the quality of the data based on these factors. Third, we perform data cleaning to remove bad recordings which can degrade the quality of synthetic voices from the datasets.
 
@@ -103,24 +103,29 @@ The structure of this thesis is as follows. Section 2 introduces factors that we
 To evaluate the quality of datasets used to train speech synthesis systems, we need to know what factors affect the quality of synthetic voices. The below factors are derived from characteristics of traditional TTS datasets that we hypothesize might contribute to the intelligibility and naturalness of synthetic voices.
 
 \subsection{Speech power}\label{subsec_speechPower}
-The power of a signal is the sum of the absolute squares of its time-domain samples divided by the signal length. The signal power in the signal $x(n)$ is
+The power of a signal is the sum of the absolute squares of its time-domain samples divided by the signal length. The power in the signal $x(n)$ is
 \begin{equation}\label{exp_power}
     P = \lim_{N\to\infty} (\frac{1}{2N+1}\sum_{n=-N}^{N} |x(n)|^2),
 \end{equation}
 where $N$ is the signal length.
 
-In traditional TTS datasets, speakers are usually intructed to speak with a moderate loud voice and try to keep the same loudness during the entire recording process. Crowdsourced datasets, however, are recorded by many people with many recording conditions, so it is impossible to have a consistent volume for all recordings, if not to say they vary greatly. Because of this, we decided to investigate speech power in speech recordings to see if it has any effect on the quality of synthetic voices.
+In traditional TTS datasets, speakers are usually intructed to speak with a moderate loud voice and try to keep the same loudness during the entire recording process. Crowdsourced datasets, however, are recorded by many people with many recording conditions, so it is impossible to have a consistent volume for all recordings, if not to say they vary greatly. Because of this, we decide to investigate speech power in speech recordings to see if it has any effect on the quality of synthetic voices.
 
 \subsection{Signal-to-noise ratio}
-Signal-to-noise ratio (SNR) is defined as the ratio of signal power to the noise power, often expressed in decibels (dB). A ratio higher than 1:1 (greater than 0 dB) indicates more signal than noise. Usually, recordings used for speech synthesis are recorded in an anechoic chamber with minimum environmental noise and reverberation. As a result, SNRs of these recordings are very high.
-Meanwhile, SNRs in many recordings in crowdsourced datasets may be low or very low due to bad recording conditions.
+Signal-to-noise ratio (SNR) is defined as the ratio of signal power to the noise power, often expressed in decibels (dB). SNR is computed as
+\begin{equation}\label{exp_SNR}
+    SNR = \frac{P_{signal}}{P_{noise}},
+\end{equation}
+where $P_{signal}$ and $P_{noise}$ are the signal power and the noise power, respectively. A ratio higher than 1:1 (greater than 0 dB) indicates more signal than noise.
+
+Usually, recordings used for speech synthesis are recorded in a studio with minimum environmental noise and reverberation. As a result, SNRs of these recordings are very high. Meanwhile, SNRs in many recordings in crowdsourced datasets may be low or very low due to bad recording conditions.
 We hypothesize that noisy or low SNR recordings can significantly degrade the intelligibility of synthetic voices.
 
 \subsection{Standard deviation of F0}
-Standard deviation of F0 (henceforth refered as stdF0) of a recording is the variation of F0 during the time of the recording. stdF0 describes how much the speaker changes their pitch during the recording. Speakers in TTS datasets are usually instructed to speak in a neutral style, without varying their pitch significantly. High stdF0 is due to expressive speech or inconsistent speaking style which might be the case of many recordings in crowdsourced datasets where speakers are non-professional.
+Standard deviation of F0 (henceforth referred as stdF0) is used to assess the variation of F0 in a recording. stdF0 of a recording describes how much the speaker changes their pitch while speaking. Speakers in TTS datasets are usually instructed to speak in a neutral style, without varying their pitch significantly. High stdF0 is due to expressive speech or inconsistent speaking style which are likely to happen in crowdsourced datasets where speech data comes from many speakers and the speakers themselves are not professionals.
 
 \subsection{Transcribed noise}
-Transcribed noise is about the inconsistency between speech and transcript. This might due to poor transcription or bad pronunciation. Because speakers are not professional, the probability of making mistakes at pronunciation in crowsourced datasets is higher than in TTS ones. It is obvious that the inconsistency between speech and transcript will strongly affect the quality of synthetic voices.
+Transcribed noise is used to assess the inconsistency between speech and transcript. High transcribed noise might due to poor transcription or bad pronunciation. Because speakers are not professionals, the probability of making mistakes at pronunciation in crowsourced datasets is higher than in TTS ones. It is obvious that the inconsistency between speech and transcript will strongly affect the quality of synthetic voices.
 
 %-----------------------------------------------------------------
 % SPEECH SYNTHESIS METHOD, TOOLS, AND DATASETS
@@ -130,24 +135,21 @@ Transcribed noise is about the inconsistency between speech and transcript. This
 \section{Speech Synthesis Method, Tools, and Datasets}\label{sec_methodToolsDatasets}
 
 \subsection{Speech synthesis method}
-Statistical parametric speech synthesis has been shown to be more effective in generating speech synthesis compared to the traditional method of concatenative synthesis in many aspects. Statistical parametric approaches producing speech parameters based on statistical models instead of concatenating speech units makes voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis, on the other hand, learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles [1]. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets.
+Statistical parametric speech synthesis has been shown to be more effective in generating synthetic speech compared to the traditional method of concatenative synthesis in many aspects. Statistical parametric approaches producing speech parameters based on statistical models instead of concatenating speech units makes voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles [1]. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets. In our work, we used CLUSTERGEN synthesizer which is a statistical parametric speech synthesis method implemented within the Festival/FestVox voice building environment [2].
 
-In our work, we used CLUSTERGEN synthesizer which is implemented within the Festival/FestVox voice building environment [2].
-
-CLUSTERGEN synthesizer is divided into two parts, training and synthesis. However, before the training part can take place, a step of labeling data is required. Labeling data is to align the phonemes generated from the transcriptions with the audios. This process is done by using an HMM labeler with a 3-state HMM model is built for each phone.
+CLUSTERGEN synthesizer is divided into two parts, training and synthesis. However, before the training part can take place, a step of labeling data is required. Labeling data is to align the phonemes generated from the transcripts with the audios. This process is done by using an HMM labeler with a 3-state HMM model built for each phone.
 
 In the training part, acoustic and linguistic features are extracted from transcript and audio signal, respectively. Linguistic features are represented as sequences of phonemes in context. Acoustic features are represented as vectors consisting of F0 and spectrum parameters (MFCC). The training is a clustering process which is done by using CART trees. CART trees are built to find questions that split the data into clusters with minimum impurity. The clusters are optimized to minimize the sum of the standard deviations of each MFCC feature multiplied by the number of samples in the cluster. A tree is built for all the vectors labeled with the same HMM state name.
 
-At synthesis time, a phoneme sequence is generated from the text, then an HMM state name relation is built linking each phone to its three subphonetic parts. Using the CART tree specific to the state name, the questions are asked and the means from the vector at the selected leaf are added as values to each vector. Then the speech is reconstructed from the predicted parameters using the MLSA filter
-
+At synthesis time, a phoneme sequence is generated from the text, then an HMM state name relation is built linking each phone to its three subphonetic parts. Using the CART tree specific to the state name, the questions are asked and the means from the vector at the selected leaf are added as values to each vector. Then the speech is reconstructed from the predicted parameters using MLSA filter.
 
 \subsection{Tools}
 
 \subsubsection{Festival Speech Synthesis}
-Festival/FestVox [3] serves as a general framework for building speech synthesis systems. It offers a full text to speech system with various APIs, as well as an environment for development and research of speech synthesis techniques. CLUSTERGEN synthesizer is a new synthesis technique added to the FestVox suite of voice building tools [4]. Festival/FestVox allows users to synthesize speech in multiple languages such as English (British and American), and Spanish. It is a free software and includes a step-by-step tutorial with examples in document called “Building Synthetic Voices”.
+Festival/FestVox [3] serves as a general framework for building speech synthesis systems. It offers a full text to speech system with various APIs, as well as an environment for development and research of speech synthesis techniques. CLUSTERGEN synthesizer is a new synthesis technique added to the FestVox suite of voice building tools [4]. Festival/FestVox allows users to synthesize speech in multiple languages such as English (British and American), and Spanish. It is a free software and includes a step-by-step tutorial with examples in a document called “Building Synthetic Voices”.
 
 \subsubsection{Signal-to-noise ratio estimation}
-For estimating the level of noise or signal-to-noise ratio (SNR) in speech recordings we use a tool from [N]. This is a collection of Matlab functions calculating SNR using different methods. Among these methods, we decide to use WADA. WADA SNR can calculate SNR without requiring a reference signal which is appropriate for our research because with crowdsourced datasets, we can not have the reference signals (clean speech recordings), only noisy recordings are available. Among the methods being able to calculate SNR without requiring reference signal, WADA is the one giving the most accurate results.
+To estimate the level of noise or signal-to-noise ratio (SNR) in speech recordings, we use a tool from [N]. This is a collection of Matlab functions calculating SNR using different methods. Among these methods, WADA is the one we use for our work. WADA SNR can calculate SNR without requiring a reference signal which is appropriate for our research because with crowdsourced datasets, we can not have the reference signals (clean speech recordings), only noisy recordings are available. Among the methods being able to calculate SNR without requiring reference signal, WADA is the one giving the most accurate results.
 
 \subsubsection{F0 estimation}
 Praat [5] is a free computer software package for speech analysis in phonetics. It offers a wide range of functions for processing speech, including pitch analysis. Praat is well documented and used widely in the field of speech signal processing. Many research used Praat to extract speech features or as reference methods.
@@ -155,24 +157,23 @@ Praat [5] is a free computer software package for speech analysis in phonetics. 
 \subsection{Datasets}
 
 \subsubsection{TTS datasets}
-The CMU\_ARCTIC databases were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, US English single speaker databases designed for unit selection speech synthesis research. The databases consist of approximately one hour per speaker. We pick two of these databases, “cmu\_us\_rms\_arctic” and “cmu\_us\_clb\_arctic”, to use in the investigation. The first one is of a male speaker and the second one is of a female speaker.
+The CMU\_ARCTIC databases were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, US English single speaker databases designed for unit selection speech synthesis research. The databases consist of approximately one hour per speaker. We pick two of these databases, “cmu\_us\_rms\_arctic” and “cmu\_us\_clb\_arctic”, to use in our investigation. The first one is of a male speaker and the second one is of a female speaker.
 
-The CMU\_INDIC databases were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, single speaker databases designed for corpus based speech synthesis research. They are covering major languages spoken in the Indian subcontinet. We also pick two of these databases, “cmu\_indic\_guj\_ad” and “cmu\_indic\_ben\_rm” to use in the investigation. The former is of a male speaker and contains about 1000 recordings. The latter is of a female speaker and contains about 500 recordings.
+The CMU\_INDIC databases were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, single speaker databases designed for corpus based speech synthesis research. They are covering major languages spoken in the Indian subcontinet. We also pick two of these databases, “cmu\_indic\_guj\_ad” and “cmu\_indic\_ben\_rm” to use in our investigation. The former is of a male speaker and contains about 1000 recordings. The latter is of a female speaker and contains about 500 recordings.
 
-JSUT (Japanese speech corpus of Saruwatari-lab., University of Tokyo) corpus is a Japanese corpus consisting of transcription and reading-style audios. The audio data is recorded in a anechoic room by a native Japanese female speaker. The whole corpus contains 10-hour speech divided into many subsets. We only use one subset named “basic5000” for the investigation. This subset contains 5000 recordings.
+JSUT (Japanese speech corpus of Saruwatari-lab., University of Tokyo) corpus is a Japanese corpus consisting of transcription and reading-style audios. The audio data is recorded in an anechoic room by a native Japanese female speaker. The whole corpus contains 10-hour speech divided into many subsets. We only use one subset named “basic5000” for our investigation. This subset contains 5000 recordings.
 
 JVS (Japanese versatile speech) corpus consists of Japanese text (transcripts) and multi-speaker voice data. The speech data is recorded in a studio by professional speakers. We use two subsets, jvs001 and jvs002, of two speakers, one male and one female. Each subset contains 100 recordings.
 
-SWARA - Mobile System for Rehabilitative Vocal Assistance of Surgical Aphonia is a national project funded by the Romanian Ministry of Education with the main objective of enabling speech impaired people, and especially those with surgical aphonia, to use a fast, personalised text-to-speech synthesis system.
-We use two subsets of this corpus which are BAS (female speaker) and FDS (male speaker).
+SWARA - Mobile System for Rehabilitative Vocal Assistance of Surgical Aphonia is one of the largest Romanian speech datasets freely available for both academic and commercial use. SWARA is a national project with the main objective of enabling speech impaired persons to use a fast, personalised text-to-speech synthesis system. The corpus amounts to approximately 21 hours of high-quality read speech data. We use two subsets of this corpus which are BAS (female speaker) and FDS (male speaker).
 
 The SIWIS French Speech Synthesis Database includes high quality French speech recordings and associated text files, aimed at building TTS systems. A total of 9750 utterances from various sources such as parliament debates and novels were uttered by a professional French voice talent. The database is divided into 5 parts. Part 1 which contains 4500 recordings is used in our investigation.
 
-Arabic Speech Corpus Speech corpus was developed as part of PhD work carried out by Nawar Halabi at the University of Southampton. The corpus contains 1813 recordings recorded in south Levantine Arabic (Damascian accent) using a professional studio.
+Arabic Speech Corpus Speech corpus was developed as part of PhD work carried out by Nawar Halabi at the University of Southampton. The corpus contains 1813 recordings recorded in south Levantine Arabic (Damascian accent) using a professional studio. The number of recordings is not big, so we use the whole corpus in our investigation.
 
 \subsubsection{Crowdsourced dataset}
 
-Common Voice is a crowdsourcing project started by Mozilla to create a free database for speech recognition software. The project is supported by volunteers who record sample sentences with a microphone.
+Common Voice is a crowdsourcing project started by Mozilla to create a free database for speech recognition software. The project is supported by volunteers who record sample sentences with a microphone and review recordings of other users. This is a massively-multilingual collection of transcribed speech recorded by over 50,000 individuals, resulting in 2,500 hours of collected audio. In our work, we only use recordings of English with US accent. Different subsets of the dataset are used in different investigations depending on the investigated factors.
 
 
 %-----------------------------------------------------------------
