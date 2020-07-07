@@ -23,7 +23,7 @@
 \studentnumber{6612180092-7}
 \doctitle{\mastersthesis}
 \major{\engineering}
-\title{Data Evaluation and Cleaning for Improving TTS Voices Trained on Crowdsourced Datasets}
+\title{Data Evaluation for Improving TTS Voices Trained on Crowdsourced Datasets}
 \author{CAO Hai Nhi}
 % CHANGE year XXXXX
 \syear{2020}
@@ -35,20 +35,20 @@
 %   （姓と名，名と称号の間に空白を入れて下さい）
 \ecmembers{Professor Yoichi Yamashita}{}{}{}			% ２人の場合
 %
-\etitle{Data Evaluation and Cleaning for Improving TTS Voices Trained on Crowdsourced Datasets}
+\etitle{Data Evaluation for Improving TTS Voices Trained on Crowdsourced Datasets}
 \eauthor{CAO Hai Nhi}
 % キーワード５-６個 (in LaTeX)
-\ekeywords{speech synthesis, data evaluation, data cleaning, crowdsourced datasets}
+\ekeywords{speech synthesis, data evaluation, crowdsourced datasets}
 %
 % 内容梗概 (in LaTeX)
 
 % 1ページに収めることが望ましい
 \eabstract{
-Usually, to synthesize a high-quality voice, it is required to have a dataset which is recorded by a professional speaker using high-quality equipment under carefully controlled conditions. The creation of such a dataset costs a lot of time, effort, and expense. In order to reduce the cost, my research tries to use a crowdsourced dataset which is created by many non-professional speakers recording their voices and contributing via Internet. This data is often recorded in normal conditions using low-cost devices such as mobile phones and laptop microphones, so it often suffers from containing noise, bad pronunciation, and inconsistent settings. My research deals with these problems by evaluating the data and performing data cleaning before using it to train speech synthesis systems. The ultimate goal is to improve the quality of voices synthesized from such low-cost datasets.
+Usually, to synthesize a high-quality voice, it is required to have a dataset which is recorded by a professional speaker using high-quality equipment under carefully controlled conditions. The creation of such a dataset costs a lot of time, effort, and expense. In order to reduce the cost, my research tries to use a crowdsourced dataset which is created by many non-professional speakers recording their voices and contributing via Internet. This data is often recorded in normal conditions using low-cost devices such as mobile phones and laptop microphones, so it often suffers from containing noise, bad pronunciation, and inconsistent settings. My research deals with these problems by evaluating the data and processing the dataset before using it to train speech synthesis system. The ultimate goal is to improve the quality of voices synthesized from such low-cost datasets.
 
-In our work, we aim to address three problems. First, we investigate what factors affecting the quality of synthetic voices. Second, we evaluate the quality of the data based on these factors. Third, we perform data cleaning to remove bad recordings which can degrade the quality of synthetic voices from the datasets.
+In our work, we aim to address three problems. First, we investigate what factors affect the quality of synthetic voices. Second, we evaluate the quality of the data based on these factors. Third, we perform appropriate processings on the dataset based on the evaluation in order to improve the quality of the synthetic voice.
 
-Evaluation results showed that speech power, signal-to-noise ratio and transcribed noise affect the quality of synthetic voices. Evaluating and performing data cleaning using these three factors can significantly improve the quality of synthetic voices.
+We find that speech power, signal-to-noise ratio and transcribed noise affect the quality of synthetic voices. Evaluating and performing appropriate processings on the dataset using these three factors can significantly improve the quality of the synthetic voice.
 }
 \newpage
 
@@ -100,10 +100,10 @@ The structure of this thesis is as follows. Section 2 introduces factors that we
 
 \clearpage
 \section{Potential Factors Affecting the Quality of Synthetic Voices}\label{sec_potentialFactors}
-To evaluate the quality of datasets used to train speech synthesis systems, we need to know what factors affect the quality of synthetic voices. The below factors are derived from characteristics of traditional TTS datasets that we hypothesize might contribute to the intelligibility and naturalness of synthetic voices.
+To evaluate the quality of data used to train speech synthesis systems, we need to know what factors affect the quality of synthetic voices. The below factors are derived from characteristics of traditional TTS datasets that we hypothesize might contribute to the intelligibility and naturalness of synthetic voices.
 
 \subsection{Speech power}\label{subsec_speechPower}
-The power of a signal is the sum of the absolute squares of its time-domain samples divided by the signal length. The power in the signal $x(n)$ is
+The power of a signal is the sum of the absolute squares of its time-domain samples divided by the signal length. The power in signal $x(n)$ is
 \begin{equation}\label{exp_power}
     P = \lim_{N\to\infty} (\frac{1}{2N+1}\sum_{n=-N}^{N} |x(n)|^2),
 \end{equation}
@@ -122,10 +122,10 @@ Usually, recordings used for speech synthesis are recorded in a studio with mini
 We hypothesize that noisy or low SNR recordings can significantly degrade the intelligibility of synthetic voices.
 
 \subsection{Standard deviation of F0}
-Standard deviation of F0 (henceforth referred as stdF0) is used to assess the variation of F0 in a recording. stdF0 of a recording describes how much the speaker changes their pitch while speaking. Speakers in TTS datasets are usually instructed to speak in a neutral style, without varying their pitch significantly. High stdF0 is due to expressive speech or inconsistent speaking style which are likely to happen in crowdsourced datasets where speech data comes from many speakers and the speakers themselves are not professionals.
+Standard deviation of F0 (henceforth referred as stdF0) is used to assess the variation of F0 in a recording. stdF0 of a recording describes how much the speaker changes their pitch while speaking. According to [6], speakers in TTS datasets are instructed to speak in their most natural and comfortable style without varying that style significantly. High stdF0 is due to expressive speech or inconsistent speaking style which are likely to happen in crowdsourced datasets where speech data comes from many speakers and the speakers themselves are not professionals.
 
 \subsection{Transcribed noise}
-Transcribed noise is used to assess the inconsistency between speech and transcript. High transcribed noise might due to poor transcription or bad pronunciation. Because speakers are not professionals, the probability of making mistakes at pronunciation in crowsourced datasets is higher than in TTS ones. It is obvious that the inconsistency between speech and transcript will strongly affect the quality of synthetic voices.
+Transcribed noise is used to assess the inconsistency between speech and transcript. High transcribed noise might due to poor transcription or bad pronunciation. Because speakers are not professionals, the chances of making mistakes at pronunciation in crowsourced datasets are higher than in TTS ones. It is obvious that the inconsistency between speech and transcript will strongly affect the quality of synthetic voices.
 
 %-----------------------------------------------------------------
 % SPEECH SYNTHESIS METHOD, TOOLS, AND DATASETS
@@ -135,7 +135,7 @@ Transcribed noise is used to assess the inconsistency between speech and transcr
 \section{Speech Synthesis Method, Tools, and Datasets}\label{sec_methodToolsDatasets}
 
 \subsection{Speech synthesis method}
-Statistical parametric speech synthesis has been shown to be more effective in generating synthetic speech compared to the traditional method of concatenative synthesis in many aspects. Statistical parametric approaches producing speech parameters based on statistical models instead of concatenating speech units makes voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles [1]. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets. In our work, we used CLUSTERGEN synthesizer which is a statistical parametric speech synthesis method implemented within the Festival/FestVox voice building environment [2].
+Statistical parametric speech synthesis has been shown to be more effective in generating synthetic speech compared to the traditional method of concatenative synthesis in many aspects. Statistical parametric approaches producing speech parameters based on statistical models instead of concatenating speech units makes voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles [1]. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets. In our work, we use CLUSTERGEN synthesizer which is a statistical parametric speech synthesis method implemented within the Festival/FestVox voice building environment [2].
 
 CLUSTERGEN synthesizer is divided into two parts, training and synthesis. However, before the training part can take place, a step of labeling data is required. Labeling data is to align the phonemes generated from the transcripts with the audios. This process is done by using an HMM labeler with a 3-state HMM model built for each phone.
 
@@ -182,15 +182,15 @@ Common Voice is a crowdsourcing project started by Mozilla to create a free data
 
 \clearpage
 \section{Investigating the Effect of the Factors on the Quality of Synthetic Voices}\label{sec_investigations}
-This section presents 4 investigations corresponding to the 4 potential factors listed in section 2 to see which of them affect the quality of synthetic voices.
+This section presents four investigations corresponding to the four potential factors listed in section {\ref{sec_potentialFactors}}. The investigations aim to determine which factors affect the quality of synthetic voices.
 
 \subsection{Speech power}
 
-We start off the investigation of speech power by examining its distribution in crowdsourced dataset. Because examining power distribution in crowdsourced dataset only does not provide much information, we compare it with ones in TTS datasets in order to observe the difference between them. The difference helps us devise policies to process the data so that the new data can produce voice with higher quality.
+We started off the investigation of speech power by examining its distribution in a crowdsourced dataset. Because examining power distribution in crowdsourced dataset only did not provide much information, we compared it with ones in TTS datasets in order to observe the difference between them. The difference helped us devise policies to process the data so that the new data can produce voice with higher quality.
 
-Common Voice is a very large dataset containing more than 4000 hours of speech. Because we do not have enough time and resource to train voice using the whole dataset, for this investigation of speech power, we use only the first 2000 recordings of US accent to represent the whole dataset.
+Common Voice is a very large dataset containing 2500 hours of speech. Because we did not have enough time and resource to train voice using the whole dataset, we used only the first 2000 recordings of US accent for this investigation of speech power.
 
-To calculate the power distribution of each dataset, we first calculate speech power of each recording in that dataset using formula \ref{exp_power} and then calculate the mean and standard deviation of power on the whole dataset. The distribution of each dataset (crowdsourced and TTS) is shown in table \ref{tab_powerDistribution} and figure \ref{fig_powerDistribution}.
+To calculate power distribution of each dataset, we first calculated speech power of each recording using formula \ref{exp_power} and then calculated the mean and standard deviation of power for the whole dataset. The power distribution of each dataset (crowdsourced and TTS) is shown in Table \ref{tab_powerDistribution} and Figure \ref{fig_powerDistribution}.
 
 \begin{figure}[t]
 \begin{center}
@@ -228,10 +228,7 @@ commonVoice & 0.0053 & 0.0111 \\
 \end{center}
 \end{table}
 
-From figure \ref{fig_powerDistribution}, we can see that the mean power of crowdsourced dataset is acceptable compared to the other ones but its power variation is very much higher. Therefore, we decide to normalize its power to see if this helps improve the quality of synthetic voices.
-
-The power normalization is performed by increasing or decreasing the power of a recording which has lower or higher power to the mean power, respectively. Figure \ref{fig_normalizingPower} shows the steps of performing power normalization.
-
+From Figure \ref{fig_powerDistribution}, it can be seen that the mean power of crowdsourced dataset is acceptable compared to the other ones but its power variation is very much higher. Therefore, we decided to normalize its power to see if this helps improve the quality of synthetic voices. The power normalization was performed by bringing power of all recordings in the dataset to the mean power. For each recording, the power was increased or decreased depending on it was lower or higher than the mean, respectively. Figure \ref{fig_normalizingPower} shows the steps of performing power normalization.
 \begin{figure}[t]
 \begin{center}
 \includegraphics[scale=0.6]{image/flowChartNormalizingPower}
@@ -241,19 +238,18 @@ The power normalization is performed by increasing or decreasing the power of a 
 \label{fig_normalizingPower}
 % \vspace{-0.3cm}
 \end{figure}
+The dataset created after the normalization has a new power distribution with mean of 0.0053 and standard deviation of $4.0554e-5$. Notice that the new standard deviation is almost 0.
 
-After performing power normalization, the power distribution of the new dataset is: mean: 0.0053, standard deviation: 0.000040554, in which the standard deviation is almost 0.
+To see how the power normalization affects the quality of synthetic voice, we evaluated the voices synthesized from the dataset before and after the normalization by using both objective and subjective evaluations. The synthetic voices were named $voice\_original$ and $voice\_powerNormalized$, respectively.\\\\
+\textbf{Objective evaluation}
+\vspace{0.28cm}\\
+Objective evaluation aiming to evaluate the intelligibility of the voices was conducted by using speech recognition APIs to recognize the synthetic speech. We used two APIs for this task which were wit.ai, a natural language API toolkit owned by Facebook, and Watson, an IBM’s API for cognitive applications.
 
-To see how the power normalization affects the quality of synthetic voice, we evaluate the voices synthesized from the dataset before and after performing it using both objective and subjective evaluations. The synthetic voices are named voice\_original and voice\_powerNormalized, respectively.\\\\
-\textbf{Objective evaluation}\\\\
-Objective evaluation aiming to evaluate the intelligibility of the voices is conducted by using speech recognition APIs to recognize the synthetic speech. The 2 APIs that we used are wit.ai and Watson which are a natural language API toolkit owned by Facebook and an IBM’s API for cognitive applications, respectively.
-The objective evaluation is conducted as follows.
-First, we synthesized 20 utterances for each voice. The sentences used for synthesizing come from 4 different domains: novel, news, conversation and scientific papers (5 sentences per each domain, the list of sentences can be found in appendix). The synthesized utterances are then recognized by the APIs. After utterances are recognized, we compute word error rate (WER) for each voice. The WER of a voice is an average over the 20 WERs of the 20 utterances. WER of an utterance is computed as
+The objective evaluation was conducted as follows. First, we synthesized 20 utterances for each voice. The sentences used for synthesizing utterances come from four different domains: novel, news, conversation and scientific papers (5 sentences per each domain, the list of the sentences can be found in appendix). The synthesized utterances were then recognized by the two APIs. After utterances were recognized, we computed word error rate (WER) for each voice. The WER of a voice was an average over the 20 WERs of the 20 utterances. WER of an utterance was computed as
 \begin{equation}\label{exp_wer}
-    WER = \frac{Substitutions + Insertions + Deletions}{Number\:of\:Words\:Spoken}
+    WER = \frac{Substitutions + Insertions + Deletions}{Number\:of\:Words\:Spoken}.
 \end{equation}
-
-The intelligibility of each voice is measured based on its WER. The WERs of the 2 synthetic voives are shown in table \ref{tab_werPower}.
+The intelligibility of each voice was assessed based on its WER. WERs of the two synthetic voices are shown in table \ref{tab_werPower}.
 
 \begin{table}[]
 \begin{center}
