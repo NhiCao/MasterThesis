@@ -240,7 +240,7 @@ From Figure \ref{fig_powerDistribution}, it can be seen that the mean power of c
 \end{figure}
 The dataset created after the normalization has a new power distribution with mean of 0.0053 and standard deviation of $4.0554e-5$. Notice that the new standard deviation is almost 0.
 
-To see how the power normalization affects the quality of synthetic voice, we evaluated the voices synthesized from the dataset before and after the normalization by using both objective and subjective evaluations. The synthetic voices were named $voice\_original$ and $voice\_powerNormalized$, respectively.\\\\
+To see how the power normalization affects the quality of synthetic voice, we evaluated the voices synthesized from the dataset before and after the normalization by using both objective and subjective evaluation. The synthetic voices were named $voice\_original$ and $voice\_powerNormalized$, respectively.\\\\
 \textbf{Objective evaluation}
 \vspace{0.28cm}\\
 Objective evaluation aiming to evaluate the intelligibility of the voices was conducted by using speech recognition APIs to recognize the synthetic speech. We used two APIs for this task which were wit.ai, a natural language API toolkit owned by Facebook, and Watson, an IBM’s API for cognitive applications.
@@ -249,7 +249,7 @@ The objective evaluation was conducted as follows. First, we synthesized 20 utte
 \begin{equation}\label{exp_wer}
     WER = \frac{Substitutions + Insertions + Deletions}{Number\:of\:Words\:Spoken}.
 \end{equation}
-The intelligibility of each voice was assessed based on its WER. WERs of the two synthetic voices are shown in table \ref{tab_werPower}.
+The intelligibility of each voice was assessed based on its WER. WERs of the two synthetic voices are shown in Table \ref{tab_werPower}.
 
 \begin{table}[]
 \begin{center}
@@ -267,9 +267,10 @@ voice\_powerNormalized   & \textbf{60.53} & \textbf{75.51} \\
 \end{center}
 \end{table}
 
-As we can see from the table, WERs of the voice synthesized from the dataset after performing power normalization is lower than the one synthesized from the original dataset in both APIs. In other words, performing power normalization helps improve the intelligibility of the synthetic voice.\\\\
-\textbf{Subjective evaluation}\\\\
-Because the cost of conducting subjective evaluation is high so we reduce the number of sentences used to synthesize the utterances to 8. However, the sentences are also from the 4 domains mentioned above (2 sentences per each domain) and are a subset of the 20 sentences. The evaluation is designed as a pairwise comparison between the original voice and the voice after performing power normalization. There are 8 pairs synthesized utterances corresponding to 8 sentences. The order of the voices in each pair is shuffled to avoid possible order effects. Evaluators are asked to listen to the 2 utterances in each pair and then decide which one has higher quality. Neutral answers are acceptable. Table \ref{tab_subEvaPower} presents the evaluation results from 12 evaluators.
+As we can see from the Table, WERs of the voice synthesized from the dataset after performing power normalization are lower than the one synthesized from the original dataset in both APIs. This means that performing power normalization helped improve the intelligibility of the synthetic voice.\\\\
+\textbf{Subjective evaluation}
+\vspace{0.28cm}\\
+Because the cost of conducting subjective evaluation is high, we reduced the number of sentences used to synthesize utterances from 20 to 8. However, the sentences were also from the four domains mentioned above (2 sentences per each domain) and were a subset of the 20 sentences. The evaluation was designed as pairwise comparisons between the original voice and the voice after performing power normalization. There were 8 pairs of synthesized utterances corresponding to the 8 sentences. The order of the voices in each pair was shuffled to avoid possible order effects. Evaluators were asked to listen to the two utterances in each pair and then decided which one had higher quality. Neutral answers were acceptable. Table \ref{tab_subEvaPower} presents the evaluation results from 12 evaluators.
 
 \begin{table}[]
 \begin{center}
@@ -288,14 +289,14 @@ No preference           & 19.79 \\
 \end{center}
 \end{table}
 
-The subjective evaluation shows that the voice synthesized from the dataset after performing power normalization is preferred to the voice synthesized from the original dataset.
+Results of subjective evaluation shows that the voice synthesized from the dataset after performing power normalization was preferred to the voice synthesized from the original dataset.
 
-From both objective and subjective evaluations, we conclude that power normalization does help improve the quality of synthetic voices.
+From both objective and subjective evaluation, we conclude that power normalization does help improve the quality of synthetic voices.
 
 \subsection{Signal-to-noise ratio (SNR)}
-Once again, because Common Voice is a very large dataset with more than 4000 hours of speech, we only use small subsets of it for investigation. In this investigation of SNR, we used 2 subsets which consist of 2000 and 4000 recordings, respectively. There are no overlaps between these 2 subsets.
+To see if SNR affects the quality of synthetic voices, we increasingly removed 5\%, 10\%, …, 25\% of recordings which had lowest SNRs (the noisiest ones) from the two datasets (subsets) and then compared the voices synthesized from the datasets created after removing against the voices synthesized from the original datasets.
 
-To see if SNR affects the quality of synthetic voices, we increasingly remove 5\%, 10\%, …, 25\% of data which has lowest SNRs (the noisiest ones) from the 2 datasets (subsets) and then compare the voices synthesized from the datasets created after removing against the voices synthesized from the original datasets.
+Once again, because Common Voice is a very large dataset with about 2500 hours of speech, we only used small subsets of it for investigation. In this investigation of SNR, we used two subsets which consist of 2000 and 4000 recordings from the dataset. There were no overlaps between these two subsets. The investigation was conducted on two datasets to increase the reliability of the results.
 
 \begin{figure}[t]
 \begin{center}
@@ -317,13 +318,14 @@ To see if SNR affects the quality of synthetic voices, we increasingly remove 5\
 % \vspace{-0.3cm}
 \end{figure}
 
-First, in the 2000-recording dataset, we calculate SNR value for each recording and then sort the list of recordings from low to high. We increasingly remove 5\%, 10\%, …, 25\% of recordings which have lowest SNRs from that list. For each amount of removal, a new dataset is created. After that, six voices are synthesized, one from the original dataset, and five from each of the new ones. The same process is done for the 4000-recording dataset. Histograms of SNR in the 2 original datasets with the amounts of removed data are shown in Figure \ref{fig_snrHist2000} and \ref{fig_snrHist4000}.\\\\
-\textbf{Objective evaluation}\\\\
-Objective evaluation is conducted similarly to the power investigation except one more step on processing the WERs from the two APIs of each voice, namely computing the average of the 2 WERs as in the following formula.
+First, in the 2000-recording dataset, we calculated SNR value for each recording and then sorted the list of recordings from low to high. We increasingly removed 5\%, 10\%, …, 25\% of recordings which had lowest SNRs from that list. For each amount of removal, a new dataset was created. After that, six voices were synthesized, one from the original dataset, and five from the newly created ones. The same process was done for the 4000-recording dataset. Histograms of SNR in the two original datasets with the amounts of removed data are shown in Figure \ref{fig_snrHist2000} and \ref{fig_snrHist4000}.\\\\
+\textbf{Objective evaluation}
+\vspace{0.28cm}\\
+Objective evaluation was similarly conducted as in the power investigation except one more step on processing the WERs from the two APIs of each voice, namely computing the average of the 2 WERs as in the following formula:
 \begin{equation}\label{exp_averageWer}
-    WER = \frac{WER_{Watson} + WER_{witai}}{2}
+    WER = \frac{WER_{Watson} + WER_{witai}}{2}.
 \end{equation}
-The purpose of averaging is to make it easier when comparing among the voices. Objective evaluation results are shown in table N and N correspoding to 2000-recording and 4000-recording dataset. Notice that the 2 voices synthesized from the 2 original datasets are called baseline voices.
+The purpose of averaging was to make it easier when comparing among the voices. Objective evaluation results are shown in Table \ref{tab_werSnr2000} and \ref{tab_werSnr4000} correspoding to 2000-recording and 4000-recording dataset. Notice that the two voices synthesized from the two original datasets are called baseline voices.
 
 \begin{table}[]
 \begin{center}
@@ -365,11 +367,12 @@ After remove 25\% & 55.82 & 71.57 & 63.70 \\
 \end{center}
 \end{table}
 
-In the tables, the values highlighted in red are the better ones compared to the baselines. A voice that has average WER lower than its baseline means it is more intelligible. We can see that, after removing recordings with lowest SNRs, the synthetic voices almost completely outperformed the baseline ones in both datasets. In other words, removing low SNR recordings does help improve the intelligibility of synthetic voices.\\\\
-\textbf{Subjective evaluation}\\\\
-Because subjective evaluation is expensive, we cannot compare all the 5 voices against the baseline one. Instead, only the voice which performed best in objective evaluation (the one with highest intelligibility or lowest WER) is chosen to compare with the baseline. This means that, in 2000-recording dataset, the voice synthesized after removing 10\% will be compared with its baseline and in 4000-recording dataset, the one synthesized after removing 25\% will be compared with its baseline.
+In the tables, the values in bold are the better ones compared to the baselines. A voice that has average WER lower than its baseline means it is more intelligible. We can see that, after removing recordings with lowest SNRs, the synthetic voices almost completely outperformed the baseline ones in both datasets. In other words, removing low SNR recordings did help improve the intelligibility of synthetic voices.\\\\
+\textbf{Subjective evaluation}
+\vspace{0.28cm}\\
+Because subjective evaluation is expensive, we cannot compare all the 5 voices against the baseline. If we do so, there will be 5 pairs of voices to compare. Instead, only the voice which performed best in objective evaluation (the one with highest intelligibility or lowest WER) was chosen to compare with the baseline. So, in 2000-recording dataset, the baseline was compared with the voice synthesized after removing 10\% and in 4000-recording dataset, the one synthesized after removing 25\% was chosen to be evaluated against its baseline.
 
-Subjective evaluation is conducted similarly to the power investigation except this time, we use 12 sentences (instead of 8 sentences). Results from 22 evaluators are shown in table \ref{tab_subEvaSnr}.
+Subjective evaluation was also similarly conducted as in the power investigation except this time, we used 12 sentences (instead of 8) which were, again, a subset of the 20 sentences used in objective evaluation. Results from 22 evaluators are shown in Table \ref{tab_subEvaSnr}.
 
 \begin{table}[]
 \begin{center}
@@ -388,10 +391,12 @@ No preference & 29.55\% & 24.62\% \\
 \end{center}
 \end{table}
 
-From the results, we can see that the voice synthesized after removing low SNR recordings is preferred than its baseline in both datasets. From both objective and subjective evaluation we conclude that removing low SNR recordings helps improve the quality of synthetic voices.
+From the results of subjective evaluation, we can see that the voice synthesized after removing low SNR recordings was preferred over its baseline in both datasets.
+
+From both objective and subjective evaluation, we conclude that removing low SNR recordings helps improve the quality of synthetic voices.
 
 \subsection{Standard deviation of F0 (stdF0)}
-As already mentioned in section 2.3, high stdF0 is due to expressive speech or inconsistent speaking style which we hypothesized might hurt the quality of synthetic voices. stdF0 investigation is conducted similarly to SNR investigation. We also increasingly remove 5\%, 10\%, …, 25\% of the data with highest stdF0 and then compare the voices synthesized from the new datasets against the voice synthesized from the original one. This investigation is also conducted using 2 datasets consiting of 2000 and 4000 recordings extracted from Common Voice dataset. Histograms of stdF0 in the 2 original datasets with the amounts of removed data are shown in Figure \ref{fig_stdF0Hist2000} and \ref{fig_stdF0Hist4000}.
+stdF0 of a recording is the variation of F0 in that recording. High stdF0 is due to expressive speech or inconsistent speaking style which we hypothesize might hurt the quality of synthetic voices. The idea of conducting stdF0 investigation is the same as in the SNR investigation. We also increasingly removed 5\%, 10\%, …, 25\% of the data with highest stdF0 and then compared the voices synthesized from the new datasets against the voice synthesized from the original one. This investigation was also conducted using two subsets consisting of 2000 and 4000 recordings extracted from Common Voice dataset. Histograms of stdF0 in the two datasets (subsets) with the amounts of removed data are shown in Figure \ref{fig_stdF0Hist2000} and \ref{fig_stdF0Hist4000}.
 
 \begin{figure}[t]
 \begin{center}
@@ -413,9 +418,10 @@ As already mentioned in section 2.3, high stdF0 is due to expressive speech or i
 % \vspace{-0.3cm}
 \end{figure}
 
-After the voices are synthesized, we conduct objective and subjective evaluation to evaluate the quality of them using the same procedures as in SNR investigation.\vspace{0.3cm}\\
-\textbf{Objective evaluation}\\
-Objective evaluation results are shown in table \ref{tab_werStdF02000} and \ref{tab_werStdF04000}.
+After the voices were synthesized, we conducted objective and subjective evaluation to evaluate the quality of them using the same procedures as in SNR investigation.\\\\
+\textbf{Objective evaluation}
+\vspace{0.28cm}\\
+Objective evaluation results are shown in Table \ref{tab_werStdF02000} and \ref{tab_werStdF04000}.
 
 \begin{table}[]
 \begin{center}
@@ -457,9 +463,10 @@ After remove 25\% & 62.95 & 75.93 & 69.44 \\
 \end{center}
 \end{table}
 
-The results show that removing high stdF0 recordings helps improve the intelligibility of synthetic voices in both datasets.\\\\
-\textbf{Subjective evaluation}\\\\
-In subjective evaluation, 2 pairs of voices are evaluated. In 2000-recording dataset, the baseline is compared with the voice synthesized after removing 10\% (the best voice chosen from objective evaluation). In 4000-recording dataset, the baseline is compared with the voice synthesized after removing 20\% (the best voice chosen from objective evaluation). Subjective evaluation results from 25 evaluators are shown in table \ref{tab_subEvaStsF0}.
+The results show that removing high stdF0 recordings helped improve the intelligibility of synthetic voices in both datasets.\\\\
+\textbf{Subjective evaluation}
+\vspace{0.28cm}\\
+In subjective evaluation, two pairs of voices were evaluated. The first one coming from the 2000-recording dataset consisted of the baseline and the voice synthesized after removing 10\% (the best voice chosen from objective evaluation). The second one coming from the 4000-recording dataset consisted of the baseline and the voice synthesized after removing 20\% (the best voice chosen from objective evaluation). Subjective evaluation results from 25 evaluators are shown in Table \ref{tab_subEvaStsF0}.
 
 \begin{table}[]
 \begin{center}
@@ -478,16 +485,20 @@ No preference & 37.00\% & 35.66\% \\
 \end{center}
 \end{table}
 
-Unlike the previous investigation, the voices synthesized after removing high stdF0 recordings are not preferred than the baselines in both datasets. From objective and subjective evaluation we conclude that removing high stdF0 recordings helps improve the intelligibility of synthetic voices but not the overall quality.
+Unlike the SNR investigation, the voices synthesized after removing high stdF0 recordings were not preferred to the baselines.
+
+From objective and subjective evaluation, we conclude that removing high stdF0 recordings helps improve the intelligibility of synthetic voices but not the overall quality.
 
 \subsection{Transcribed noise}
-Transcribed noise is the inconsistency between speech and transcript. To detect recordings containing transcribed noise in a dataset, we use a speech recognition API to recognize all recordings in that dataset and then calculate WER for each one using its transcript and the recognized text. Recordings with high WER are considered to have high transcribed noise. The API used to recognized recordings is Watson.
+Transcribed noise is the inconsistency between speech and transcript. To detect recordings containing transcribed noise in a dataset, we used a speech recognition API to recognize all recordings in that dataset and then calculated WER for each recording using its transcript and the recognized text. Recordings with high WER were considered to have high transcribed noise. The API used to recognized recordings was Watson.
 
-The same approach is applied for this investigation, namely removing increasing amounts of recordings with highest WERs from 2 original datasets which are 2 subsets of 2000 and 4000 recordings extracted from Common Voice dataset. From each new dataset, a voice is synthesized and compared to its corresponding baseline. The comparisons are made based on both objective and subjective evaluation. Histograms of SNR in the 2 original datasets with the amounts of removed data are shown in Figure \ref{fig_transcribedNoiseHist2000} and \ref{fig_transcribedNoiseHist4000}.\\\\
-\textbf{Objective evaluation}\\\\
-Objective evaluation results are shown in table \ref{tab_werTranscribedNoise2000} and \ref{tab_werTranscribedNoise4000}.\\\\
-\textbf{Subjective evaluation}\\\\
-In subjective evaluation, 2 pairs of voices are evaluated. In 2000-recording dataset, the baseline is compared with the voice synthesized after removing 10\% (the best voice chosen from objective evaluation). In 4000-recording dataset, the baseline is compared with the voice synthesized after removing 20\% (the best voice chosen from objective evaluation). Subjective evaluation results from 27 evaluators are shown in table \ref{tab_subEvaTranscribedNoise}.
+The same approach was applied for this investigation. We removed increasing amounts of recordings with highest WERs from two datasets which were two subsets of 2000 and 4000 recordings from Common Voice dataset. From each new dataset, a voice was synthesized and compared to its corresponding baseline. The comparisons were made based on both objective and subjective evaluation. Histograms of WER in the two datasets (subsets) with the amounts of removed data are shown in Figure \ref{fig_transcribedNoiseHist2000} and \ref{fig_transcribedNoiseHist4000}.\\\\
+\textbf{Objective evaluation}
+\vspace{0.28cm}\\
+Objective evaluation results are shown in table \ref{tab_werTranscribedNoise2000} and \ref{tab_werTranscribedNoise4000}. As can be seen from the tables, the voices synthesized after removing high transcribed noise recordings were more intelligible than the baseline ones.\\\\
+\textbf{Subjective evaluation}
+\vspace{0.28cm}\\
+In subjective evaluation, two pairs of voices were evaluated. The first one coming from the 2000-recording dataset consisted of the baseline and the voice synthesized after removing 10\% (the best voice chosen from objective evaluation). The second one coming from the 4000-recording dataset consisted of the baseline and the voice synthesized after removing 20\% (the best voice chosen from objective evaluation). Subjective evaluation results from 27 evaluators are shown in Table \ref{tab_subEvaTranscribedNoise}.
 
 \begin{figure}[t]
 \begin{center}
@@ -566,7 +577,7 @@ No preference & 32.10\% & 30.56\% \\
 \end{center}
 \end{table}
 
-Results show significant improvement in quality for the voices synthesized after removing recordings with high transcribed noise.
+Subjective evaluation results show improvements in quality for the voices synthesized after removing high transcribed noise recordings.
 
 Combining objective and subjective evaluation results, we conclude that removing recordings with high transcribed noise does help improve the quality of synthetic voices.
 
