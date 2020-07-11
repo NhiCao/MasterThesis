@@ -15,6 +15,7 @@
 \usepackage{tabularx}
 \usepackage{algorithm,algorithmic}
 \usepackage{cite}
+% \usepackage{url}
 
 \newcommand{\argmin}{\mathop{\rm argmin}\limits}
 
@@ -109,7 +110,7 @@ The power of a signal is the sum of the absolute squares of its time-domain samp
 \end{equation}
 where $N$ is the signal length.
 
-In traditional TTS datasets, speakers are usually intructed to speak with a moderate loud voice and try to keep the same loudness during the entire recording process. Crowdsourced datasets, however, are recorded by many people with many recording conditions, so it is impossible to have a consistent volume for all recordings, if not to say they vary greatly. Because of this, we decide to investigate speech power in speech recordings to see if it has any effect on the quality of synthetic voices.
+In traditional TTS datasets, speakers are usually intructed to speak with a moderate loud voice and try to keep the same loudness during the entire recording process \cite{corpusRecording}, \cite{buildingCorpus}. Crowdsourced datasets, however, are recorded by many people with many recording conditions, so it is impossible to have a consistent volume for all recordings, if not to say they vary greatly. Because of this, we decide to investigate speech power in speech recordings to see if it has any effect on the quality of synthetic voices.
 
 \subsection{Signal-to-noise ratio}
 Signal-to-noise ratio (SNR) is defined as the ratio of signal power to the noise power, often expressed in decibels (dB). SNR is computed as
@@ -118,11 +119,11 @@ Signal-to-noise ratio (SNR) is defined as the ratio of signal power to the noise
 \end{equation}
 where $P_{signal}$ and $P_{noise}$ are the signal power and the noise power, respectively. A ratio higher than 1:1 (greater than 0 dB) indicates more signal than noise.
 
-Usually, recordings used for speech synthesis are recorded in a studio with minimum environmental noise and reverberation. As a result, SNRs of these recordings are very high. Meanwhile, SNRs in many recordings in crowdsourced datasets may be low or very low due to bad recording conditions.
+Usually, recordings used for speech synthesis are recorded in a studio with minimum environmental noise. As a result, SNRs of these recordings are very high. Meanwhile, SNRs in many recordings in crowdsourced datasets may be low or very low due to bad recording conditions.
 We hypothesize that noisy or low SNR recordings can significantly degrade the intelligibility of synthetic voices.
 
 \subsection{Standard deviation of F0}
-Standard deviation of F0 (henceforth referred as stdF0) is used to assess the variation of F0 in a recording. stdF0 of a recording describes how much the speaker changes their pitch while speaking. According to [6], speakers in TTS datasets are instructed to speak in their most natural and comfortable style without varying that style significantly. High stdF0 is due to expressive speech or inconsistent speaking style which are likely to happen in crowdsourced datasets where speech data comes from many speakers and the speakers themselves are not professionals.
+Standard deviation of F0 (henceforth referred as stdF0) is used to assess the variation of F0 in a recording. stdF0 of a recording describes how much the speaker changes their pitch while speaking. According to \cite{buildingCorpus}, speakers in TTS datasets are instructed to speak in their most natural and comfortable style without varying that style significantly. High stdF0 is due to expressive speech or inconsistent speaking style \cite{usingAudiobooks}, \cite{dataSelectionFoundCorpuses} which are likely to happen in crowdsourced datasets where speech data comes from many speakers and the speakers themselves are not professionals.
 
 \subsection{Transcribed noise}
 Transcribed noise is used to assess the inconsistency between speech and transcript. High transcribed noise might due to poor transcription or bad pronunciation. Because speakers are not professionals, the chances of making mistakes at pronunciation in crowsourced datasets are higher than in TTS ones. It is obvious that the inconsistency between speech and transcript will strongly affect the quality of synthetic voices.
@@ -135,7 +136,7 @@ Transcribed noise is used to assess the inconsistency between speech and transcr
 \section{Speech Synthesis Method, Tools, and Datasets}\label{sec_methodToolsDatasets}
 
 \subsection{Speech synthesis method}
-Statistical parametric speech synthesis has been shown to be more effective in generating synthetic speech compared to the traditional method of concatenative synthesis in many aspects. Statistical parametric approaches producing speech parameters based on statistical models instead of concatenating speech units makes voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles [1]. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets. In our work, we use CLUSTERGEN synthesizer which is a statistical parametric speech synthesis method implemented within the Festival/FestVox voice building environment [2].
+Statistical parametric speech synthesis has been shown to be more effective in generating synthetic speech compared to the traditional method of concatenative synthesis in many aspects \cite{SPSS}. Statistical parametric approaches producing speech parameters based on statistical models instead of concatenating speech units makes voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets. In our work, we use CLUSTERGEN synthesizer \cite{clustergen} which is a statistical parametric speech synthesis method implemented within the Festival/FestVox voice building environment \cite{festvox:2014}.
 
 CLUSTERGEN synthesizer is divided into two parts, training and synthesis. However, before the training part can take place, a step of labeling data is required. Labeling data is to align the phonemes generated from the transcripts with the audios. This process is done by using an HMM labeler with a 3-state HMM model built for each phone.
 
@@ -146,34 +147,34 @@ At synthesis time, a phoneme sequence is generated from the text, then an HMM st
 \subsection{Tools}
 
 \subsubsection{Festival Speech Synthesis}
-Festival/FestVox [3] serves as a general framework for building speech synthesis systems. It offers a full text to speech system with various APIs, as well as an environment for development and research of speech synthesis techniques. CLUSTERGEN synthesizer is a new synthesis technique added to the FestVox suite of voice building tools [4]. Festival/FestVox allows users to synthesize speech in multiple languages such as English (British and American), and Spanish. It is a free software and includes a step-by-step tutorial with examples in a document called “Building Synthetic Voices”.
+Festival/FestVox \cite{festvox:2014} serves as a general framework for building speech synthesis systems. It offers a full text to speech system with various APIs, as well as an environment for development and research of speech synthesis techniques. CLUSTERGEN synthesizer is a new synthesis technique added to the FestVox suite of voice building tools. Festival/FestVox allows users to synthesize speech in multiple languages such as English (British and American), and Spanish. It is a free software and includes a step-by-step tutorial with examples in a document called “Building Synthetic Voices”.
 
 \subsubsection{Signal-to-noise ratio estimation}
-To estimate the level of noise or signal-to-noise ratio (SNR) in speech recordings, we use a tool from [N]. This is a collection of Matlab functions calculating SNR using different methods. Among these methods, WADA is the one we use for our work. WADA SNR can calculate SNR without requiring a reference signal which is appropriate for our research because with crowdsourced datasets, we can not have the reference signals (clean speech recordings), only noisy recordings are available. Among the methods being able to calculate SNR without requiring reference signal, WADA is the one giving the most accurate results.
+We compute SNR of speech recordings using Waveform Amplitude Distribution Analysis (WADA) \cite{wadaSnr}. WADA-SNR algorithm can estimate SNR without requiring a clean reference signal which is appropriate for our research because with crowdsourced datasets, we can not have the reference signals (clean speech recordings), only noisy recordings are available. Based on a published evaluation in \cite{supervisedSnr}, WADA-SNR algorithm has been shown to be more accurate than the standard NIST algorithm \cite{nistSnr}.
 
 \subsubsection{F0 estimation}
-Praat [5] is a free computer software package for speech analysis in phonetics. It offers a wide range of functions for processing speech, including pitch analysis. Praat is well documented and used widely in the field of speech signal processing. Many research used Praat to extract speech features or as reference methods.
+Praat \cite{praat} is a free computer software package for speech analysis in phonetics. It offers a wide range of functions for processing speech, including pitch analysis. Praat is well documented and used widely in the field of speech signal processing. Many research used Praat to extract speech features or as reference methods.
 
 \subsection{Datasets}
 
 \subsubsection{TTS datasets}
-The CMU\_ARCTIC databases were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, US English single speaker databases designed for unit selection speech synthesis research. The databases consist of approximately one hour per speaker. We pick two of these databases, “cmu\_us\_rms\_arctic” and “cmu\_us\_clb\_arctic”, to use in our investigation. The first one is of a male speaker and the second one is of a female speaker.
+The CMU\_ARCTIC databases \cite{cmrArctic} were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, US English single speaker databases designed for unit selection speech synthesis research. The databases consist of approximately one hour per speaker. We pick two of these databases, “cmu\_us\_rms\_arctic” and “cmu\_us\_clb\_arctic”, to use in our investigation. The first one is of a male speaker and the second one is of a female speaker.
 
-The CMU\_INDIC databases were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, single speaker databases designed for corpus based speech synthesis research. They are covering major languages spoken in the Indian subcontinet. We also pick two of these databases, “cmu\_indic\_guj\_ad” and “cmu\_indic\_ben\_rm” to use in our investigation. The former is of a male speaker and contains about 1000 recordings. The latter is of a female speaker and contains about 500 recordings.
+The CMU\_INDIC databases \cite{cmuIndic} were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, single speaker databases designed for corpus based speech synthesis research. They are covering major languages spoken in the Indian subcontinet. We also pick two of these databases, “cmu\_indic\_guj\_ad” and “cmu\_indic\_ben\_rm” to use in our investigation. The former is of a male speaker and contains about 1000 recordings. The latter is of a female speaker and contains about 500 recordings.
 
-JSUT (Japanese speech corpus of Saruwatari-lab., University of Tokyo) corpus is a Japanese corpus consisting of transcription and reading-style audios. The audio data is recorded in an anechoic room by a native Japanese female speaker. The whole corpus contains 10-hour speech divided into many subsets. We only use one subset named “basic5000” for our investigation. This subset contains 5000 recordings.
+JSUT (Japanese speech corpus of Saruwatari-lab., University of Tokyo) corpus \cite{jsut} is a Japanese corpus consisting of transcription and reading-style audios. The audio data is recorded in an anechoic room by a native Japanese female speaker. The whole corpus contains 10-hour speech divided into many subsets. We only use one subset named “basic5000” for our investigation. This subset contains 5000 recordings.
 
-JVS (Japanese versatile speech) corpus consists of Japanese text (transcripts) and multi-speaker voice data. The speech data is recorded in a studio by professional speakers. We use two subsets, jvs001 and jvs002, of two speakers, one male and one female. Each subset contains 100 recordings.
+JVS (Japanese versatile speech) corpus \cite{jvs} consists of Japanese text (transcripts) and multi-speaker voice data. The speech data is recorded in a studio by professional speakers. We use two subsets, jvs001 and jvs002, of two speakers, one male and one female. Each subset contains 100 recordings.
 
-SWARA - Mobile System for Rehabilitative Vocal Assistance of Surgical Aphonia is one of the largest Romanian speech datasets freely available for both academic and commercial use. SWARA is a national project with the main objective of enabling speech impaired persons to use a fast, personalised text-to-speech synthesis system. The corpus amounts to approximately 21 hours of high-quality read speech data. We use two subsets of this corpus which are BAS (female speaker) and FDS (male speaker).
+SWARA - Mobile System for Rehabilitative Vocal Assistance of Surgical Aphonia \cite{swara} is one of the largest Romanian speech datasets freely available for both academic and commercial use. SWARA is a national project with the main objective of enabling speech impaired persons to use a fast, personalised text-to-speech synthesis system. The corpus amounts to approximately 21 hours of high-quality read speech data. We use two subsets of this corpus which are BAS (female speaker) and FDS (male speaker).
 
-The SIWIS French Speech Synthesis Database includes high quality French speech recordings and associated text files, aimed at building TTS systems. A total of 9750 utterances from various sources such as parliament debates and novels were uttered by a professional French voice talent. The database is divided into 5 parts. Part 1 which contains 4500 recordings is used in our investigation.
+The SIWIS French Speech Synthesis Database \cite{siwis} includes high quality French speech recordings and associated text files, aimed at building TTS systems. A total of 9750 utterances from various sources such as parliament debates and novels were uttered by a professional French voice talent. The database is divided into 5 parts. Part 1 which contains 4500 recordings is used in our investigation.
 
-Arabic Speech Corpus Speech corpus was developed as part of PhD work carried out by Nawar Halabi at the University of Southampton. The corpus contains 1813 recordings recorded in south Levantine Arabic (Damascian accent) using a professional studio. The number of recordings is not big, so we use the whole corpus in our investigation.
+Arabic Speech Corpus \cite{arabicCorpus} was developed as part of PhD work carried out by Nawar Halabi at the University of Southampton. The corpus contains 1813 recordings recorded in south Levantine Arabic (Damascian accent) using a professional studio. The number of recordings is not big, so we use the whole corpus in our investigation.
 
 \subsubsection{Crowdsourced dataset}
 
-Common Voice is a crowdsourcing project started by Mozilla to create a free database for speech recognition software. The project is supported by volunteers who record sample sentences with a microphone and review recordings of other users. This is a massively-multilingual collection of transcribed speech recorded by over 50,000 individuals, resulting in 2,500 hours of collected audio. In our work, we only use recordings of English with US accent. Different subsets of the dataset are used in different investigations depending on the investigated factors.
+Common Voice \cite{commonVoice} is a crowdsourcing project started by Mozilla to create a free database for speech recognition software. The project is supported by volunteers who record sample sentences with a microphone and review recordings of other users. This is a massively-multilingual collection of transcribed speech recorded by over 50,000 individuals, resulting in 2,500 hours of collected audio. In our work, we only use recordings of English with US accent. Different subsets of the dataset are used in different investigations depending on the investigated factors.
 
 
 %-----------------------------------------------------------------
@@ -228,7 +229,7 @@ commonVoice & 0.0053 & 0.0111 \\
 \end{center}
 \end{table}
 
-From Figure \ref{fig_powerDistribution}, it can be seen that the mean power of crowdsourced dataset is acceptable compared to the other ones but its power variation is very much higher. Therefore, we decided to normalize its power to see if this helps improve the quality of synthetic voices. The power normalization was performed by bringing power of all recordings in the dataset to the mean power. For each recording, the power was increased or decreased depending on it was lower or higher than the mean, respectively. Figure \ref{fig_normalizingPower} shows the steps of performing power normalization.
+From Figure \ref{fig_powerDistribution}, it can be seen that the mean power of crowdsourced dataset is acceptable compared to the other ones but its power variation is very much higher. As already mentioned in section \ref{sec_potentialFactors}, speakers in TTS datasets are usually instructed to speak as consistently as possible \cite{buildingCorpus} which means that they should not change their volume significantly. Therefore, we decided to normalize the power of all recordings in the dataset to see if this helps improve the quality of synthetic voices. The power normalization was performed by bringing power of all recordings in the dataset to the mean power. For each recording, the power was increased or decreased depending on it was lower or higher than the mean, respectively. Figure \ref{fig_normalizingPower} shows the steps of performing power normalization.
 \begin{figure}[t]
 \begin{center}
 \includegraphics[scale=0.6]{image/flowChartNormalizingPower}
@@ -243,7 +244,7 @@ The dataset created after the normalization has a new power distribution with me
 To see how the power normalization affects the quality of synthetic voice, we evaluated the voices synthesized from the dataset before and after the normalization by using both objective and subjective evaluation. The synthetic voices were named $voice\_original$ and $voice\_powerNormalized$, respectively.\\\\
 \textbf{Objective evaluation}
 \vspace{0.28cm}\\
-Objective evaluation aiming to evaluate the intelligibility of the voices was conducted by using speech recognition APIs to recognize the synthetic speech. We used two APIs for this task which were wit.ai, a natural language API toolkit owned by Facebook, and Watson, an IBM’s API for cognitive applications.
+Objective evaluation aiming to evaluate the intelligibility of the voices was conducted by using automatic speech recognition (ASR) APIs to recognize the synthetic speech. \cite{utteranceSelectionCooper2017} has shown a strong correlations between results from ASR APIs and those from human evaluation. We used two APIs for this task which were wit.ai \cite{witai}, a natural language API toolkit owned by Facebook, and Watson \cite{watson}, an IBM’s API for cognitive applications.
 
 The objective evaluation was conducted as follows. First, we synthesized 20 utterances for each voice. The sentences used for synthesizing utterances come from four different domains: novel, news, conversation and scientific papers (5 sentences per each domain, the list of the sentences can be found in appendix). The synthesized utterances were then recognized by the two APIs. After utterances were recognized, we computed word error rate (WER) for each voice. The WER of a voice was an average over the 20 WERs of the 20 utterances. WER of an utterance was computed as
 \begin{equation}\label{exp_wer}
@@ -267,7 +268,7 @@ voice\_powerNormalized   & \textbf{60.53} & \textbf{75.51} \\
 \end{center}
 \end{table}
 
-As we can see from the Table, WERs of the voice synthesized from the dataset after performing power normalization are lower than the one synthesized from the original dataset in both APIs. This means that performing power normalization helped improve the intelligibility of the synthetic voice.\\\\
+As we can see from the table, WERs of the voice synthesized from the dataset after performing power normalization are lower than the one synthesized from the original dataset in both APIs. This means that performing power normalization helped improve the intelligibility of the synthetic voice.\\\\
 \textbf{Subjective evaluation}
 \vspace{0.28cm}\\
 Because the cost of conducting subjective evaluation is high, we reduced the number of sentences used to synthesize utterances from 20 to 8. However, the sentences were also from the four domains mentioned above (2 sentences per each domain) and were a subset of the 20 sentences. The evaluation was designed as pairwise comparisons between the original voice and the voice after performing power normalization. There were 8 pairs of synthesized utterances corresponding to the 8 sentences. The order of the voices in each pair was shuffled to avoid possible order effects. Evaluators were asked to listen to the two utterances in each pair and then decided which one had higher quality. Neutral answers were acceptable. Table \ref{tab_subEvaPower} presents the evaluation results from 12 evaluators.
@@ -321,7 +322,7 @@ Once again, because Common Voice is a very large dataset with about 2500 hours o
 First, in the 2000-recording dataset, we calculated SNR value for each recording and then sorted the list of recordings from low to high. We increasingly removed 5\%, 10\%, …, 25\% of recordings which had lowest SNRs from that list. For each amount of removal, a new dataset was created. After that, six voices were synthesized, one from the original dataset, and five from the newly created ones. The same process was done for the 4000-recording dataset. Histograms of SNR in the two original datasets with the amounts of removed data are shown in Figure \ref{fig_snrHist2000} and \ref{fig_snrHist4000}.\\\\
 \textbf{Objective evaluation}
 \vspace{0.28cm}\\
-Objective evaluation was similarly conducted as in the power investigation except one more step on processing the WERs from the two APIs of each voice, namely computing the average of the 2 WERs as in the following formula:
+Objective evaluation was conducted as in the power investigation except one more step on processing the WERs from the two APIs of each voice, namely computing the average of the two WERs as in the following formula:
 \begin{equation}\label{exp_averageWer}
     WER = \frac{WER_{Watson} + WER_{witai}}{2}.
 \end{equation}
@@ -370,9 +371,9 @@ After remove 25\% & 55.82 & 71.57 & 63.70 \\
 In the tables, the values in bold are the better ones compared to the baselines. A voice that has average WER lower than its baseline means it is more intelligible. We can see that, after removing recordings with lowest SNRs, the synthetic voices almost completely outperformed the baseline ones in both datasets. In other words, removing low SNR recordings did help improve the intelligibility of synthetic voices.\\\\
 \textbf{Subjective evaluation}
 \vspace{0.28cm}\\
-Because subjective evaluation is expensive, we cannot compare all the 5 voices against the baseline. If we do so, there will be 5 pairs of voices to compare. Instead, only the voice which performed best in objective evaluation (the one with highest intelligibility or lowest WER) was chosen to compare with the baseline. So, in 2000-recording dataset, the baseline was compared with the voice synthesized after removing 10\% and in 4000-recording dataset, the one synthesized after removing 25\% was chosen to be evaluated against its baseline.
+Because subjective evaluation is expensive, we cannot compare all the 5 voices against the baseline. If we do so, this would lead to an enormous amount of work for evaluators in the listening test which would be so expensive to conduct. Instead, only the voice which performed the best in objective evaluation (the one with highest intelligibility or lowest WER) was chosen to compare with the baseline. So, in 2000-recording dataset, the baseline was compared with the voice synthesized after removing 10\% and in 4000-recording dataset, the one synthesized after removing 25\% was chosen to be evaluated against its baseline.
 
-Subjective evaluation was also similarly conducted as in the power investigation except this time, we used 12 sentences (instead of 8) which were, again, a subset of the 20 sentences used in objective evaluation. Results from 22 evaluators are shown in Table \ref{tab_subEvaSnr}.
+Subjective evaluation was also conducted as in the power investigation except this time, we used 12 sentences (instead of 8) which were, again, a subset of the 20 sentences used in objective evaluation. Results from 22 evaluators are shown in Table \ref{tab_subEvaSnr}.
 
 \begin{table}[]
 \begin{center}
@@ -422,7 +423,6 @@ After the voices were synthesized, we conducted objective and subjective evaluat
 \textbf{Objective evaluation}
 \vspace{0.28cm}\\
 Objective evaluation results are shown in Table \ref{tab_werStdF02000} and \ref{tab_werStdF04000}.
-
 \begin{table}[]
 \begin{center}
 \caption{WER of voices synthesized from 2000-recording dataset before and after removing highest stdF0 recordings.}
@@ -442,7 +442,6 @@ After remove 25\% & 63.14 & 72.39 & 67.77 \\
 \end{tabular}
 \end{center}
 \end{table}
-
 \begin{table}[]
 \begin{center}
 \caption{WER of voices synthesized from 4000-recording dataset before and after removing highest stdF0 recordings.}
@@ -462,7 +461,6 @@ After remove 25\% & 62.95 & 75.93 & 69.44 \\
 \end{tabular}
 \end{center}
 \end{table}
-
 The results show that removing high stdF0 recordings helped improve the intelligibility of synthetic voices in both datasets.\\\\
 \textbf{Subjective evaluation}
 \vspace{0.28cm}\\
@@ -490,9 +488,9 @@ Unlike the SNR investigation, the voices synthesized after removing high stdF0 r
 From objective and subjective evaluation, we conclude that removing high stdF0 recordings helps improve the intelligibility of synthetic voices but not the overall quality.
 
 \subsection{Transcribed noise}
-Transcribed noise is the inconsistency between speech and transcript. To detect recordings containing transcribed noise in a dataset, we used a speech recognition API to recognize all recordings in that dataset and then calculated WER for each recording using its transcript and the recognized text. Recordings with high WER were considered to have high transcribed noise. The API used to recognized recordings was Watson.
+Transcribed noise is the inconsistency between speech and transcript. To detect recordings containing transcribed noise in a dataset, we used an ASR API to recognize all recordings in that dataset and then calculated WER for each recording using its transcript and the recognized text. Recordings with high WER were considered to have high transcribed noise. The API used to recognize recordings was Watson \cite{watson}.
 
-The same approach was applied for this investigation. We removed increasing amounts of recordings with highest WERs from two datasets which were two subsets of 2000 and 4000 recordings from Common Voice dataset. From each new dataset, a voice was synthesized and compared to its corresponding baseline. The comparisons were made based on both objective and subjective evaluation. Once again, objective and subjective evaluation were conducted as in SNR investigation. Histograms of WER in the two datasets (subsets) with the amounts of removed data are shown in Figure \ref{fig_transcribedNoiseHist2000} and \ref{fig_transcribedNoiseHist4000}.\\\\
+As with previous investigations, the same approach was applied for this one. We removed increasing amounts of recordings with highest WERs from two datasets which were two subsets of 2000 and 4000 recordings from Common Voice dataset. From each new dataset, a voice was synthesized and compared to its corresponding baseline. The comparisons were made based on both objective and subjective evaluation. Once again, objective and subjective evaluation were conducted as in SNR investigation. Histograms of WER in the two datasets (subsets) with the amounts of removed data are shown in Figure \ref{fig_transcribedNoiseHist2000} and \ref{fig_transcribedNoiseHist4000}.\\\\
 \textbf{Objective evaluation}
 \vspace{0.28cm}\\
 Objective evaluation results are shown in table \ref{tab_werTranscribedNoise2000} and \ref{tab_werTranscribedNoise4000}. As can be seen from the tables, the voices synthesized after removing high transcribed noise recordings were more intelligible than the baseline ones.\\\\
@@ -894,7 +892,7 @@ I would also like to thank all my lab members who supported me greatly and were 
 \newpage
 %-----------------------------------------------------------------
 \bibliography{reference}
-
+\bibliographystyle{ieeetr}
 
 %-----------------------------------------------------------------
 % APPENDIX
