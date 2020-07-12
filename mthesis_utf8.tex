@@ -83,17 +83,17 @@ We find that speech power, signal-to-noise ratio and transcribed noise affect th
 %-----------------------------------------------------------------
 
 \section{Introduction}
-Speech synthesis or text-to-speech (TTS) is a technique that converts written text into artificial speech. This technique has been rapidly developed in the recent years and has already reached a level of almost as natural as human speech. However, there are still some problems remaining such as great resource consuming and costly datasets. My research aims to reduce the cost by using cheaper datasets.
+Speech synthesis or text-to-speech (TTS) is a technique that converts written text into artificial speech. This technique has been rapidly developed in the recent years and has already reached a level of almost human-like speech. However, there are still some problems remaining such as great resource consuming and costly datasets. My research aims to reduce the cost by using cheaper datasets.
 
-Usually, speech synthesis systems require datasets that consume a great deal of time, effort, and expense to create. Traditional TTS datasets are recorded by professional speakers who possess correct and clear pronunciation. The amount of speech data needed to train a speech synthesis system varies from several hours to tens of hours. Usually, the more data, the more intelligible and natural the synthetic voice. This means that to produce a high-quality synthetic voice, the speaker has to speak tens of hours with high quality of his/her speaking and maintain so throughout the recording process. Moreover, the recording must be carried out in a quiet and anechoic chamber using high-quality devices.
+Usually, speech synthesis systems are trained on dedicated datasets that involve a great deal of time, effort, and expense to create. These datasets are recorded by a professional speaker in a single speaking style. The amount of data needed to train a speech synthesis system varies from several hours to tens of hours. Usually, the more data, the more intelligible and natural the synthetic voice. This means that to produce a high-quality synthetic voice, the speaker has to speak tens of hours and try to maintain his/her speaking style throughout the recording process. Moreover, the recording must be carried out in a quiet and anechoic chamber using high-quality devices.
 
-With the goal to recude the cost in creating TTS datasets, many researches use other sources of speech data that are available online such as audiobooks, broadcast news and ASR datasets. These research showed the effectiveness of several techniques that help improve the quality of voices synthesized from those kinds of found data. Crowdsourced datasets, however, have not been investigated yet.
+With the goal to recude the cost in creating TTS datasets, many research use other sources of speech data that are available online such as audiobooks, broadcast news and ASR datasets. These research showed the effectiveness of several techniques that help improve the quality of voices synthesized from those kinds of found data. Crowdsourced datasets, however, have not been investigated yet.
 
-Recently, with the rapid development of Internet, it becomes easier for people to get, share and contribute information on a social platform. Speech data collection, as a result, becomes easier and cheaper. Crowdsourced datasets are created by many people contributing their voices via Internet. A dataset of this kind contains data of many speakers who may be professional or non-professional. This leads to the dataset may contain recordings with bad pronunciation. Also because of various speakers, recording conditions as well as speaking styles are different. These issues need to be tackled before using the datasets in synthesizing speech.
+Crowdsourced datasets are created by many people contributing their voices via Internet. A dataset of this kind is recorded by many speakers who are mostly non-professionals under non-optimal recording conditions. This means that the dataset may contain recordings with bad pronunciation or background noise with a wide variety of speaking styles. These issues need to be tackled before using the datasets in synthesizing speech.
 
-In this research, we focus on investigating what factors affect the quality of synthetic voices and using them as criteria to evaluate the quality of crowdsourced datasets. Data cleaning is performed after the evaluation. Both objective and subjective evaluation are conducted to evaluate the quality of the voices trained from the cleaned datasets in order to confirm the effectiveness of the approach.
+In this research, we focus on investigating what factors affect the quality of synthetic voices and using them as criteria to evaluate the quality of crowdsourced datasets. Dataset processing is appropriately performed after the evaluation. Both objective and subjective evaluation are conducted to evaluate the quality of the voices trained on the processed datasets in order to confirm the effectiveness of the approach.
 
-The structure of this thesis is as follows. Section 2 introduces factors that we hypothesize might affect the quality of synthetic voices. Section 3 gives a brief introduction about the tools, datasets and speech synthesis method used in our work. Section 4 presents the investigations conducted for each of the factors to see which ones help improve the quality of synthetic voices. In Section 5, we present experiments of evaluating and performing data cleaning using the effective factors. Finally, chapter 6 concludes our findings and discusses some ideas for future work.
+The structure of this thesis is as follows. Section 2 introduces factors that we hypothesize might affect the quality of synthetic voices. Section 3 gives a brief introduction about the tools, datasets and speech synthesis method used in our work. Section 4 presents the investigations conducted for each of the factors to see which ones help improve the quality of synthetic voices. In Section 5, we present experiments of evaluating and processing crowdsourced datasets using the effective factors. Finally, chapter 6 concludes our findings and discusses some ideas for future work.
  
 %-----------------------------------------------------------------
 % POTENTIAL FACTORS AFFECTING THE QUALITY OF SYNTHETIC VOICES
@@ -110,7 +110,7 @@ The power of a signal is the sum of the absolute squares of its time-domain samp
 \end{equation}
 where $N$ is the signal length.
 
-In traditional TTS datasets, speakers are usually intructed to speak with a moderate loud voice and try to keep the same loudness during the entire recording process \cite{corpusRecording}, \cite{buildingCorpus}. Crowdsourced datasets, however, are recorded by many people with many recording conditions, so it is impossible to have a consistent volume for all recordings, if not to say they vary greatly. Because of this, we decide to investigate speech power in speech recordings to see if it has any effect on the quality of synthetic voices.
+In traditional TTS datasets, speakers are usually instructed to speak with a moderate loud voice and try to keep the same loudness during the entire recording process \cite{corpusRecording}, \cite{buildingCorpus}. Crowdsourced datasets, however, are recorded by many people with many recording conditions, so it is impossible to have a consistent volume for all recordings, if not to say they vary greatly. Because of this, we decide to investigate speech power in speech recordings to see if it has any effect on the quality of synthetic voices.
 
 \subsection{Signal-to-noise ratio}
 Signal-to-noise ratio (SNR) is defined as the ratio of signal power to the noise power, often expressed in decibels (dB). SNR is computed as
@@ -136,7 +136,7 @@ Transcribed noise is used to assess the inconsistency between speech and transcr
 \section{Speech Synthesis Method, Tools, and Datasets}\label{sec_methodToolsDatasets}
 
 \subsection{Speech synthesis method}
-Statistical parametric speech synthesis has been shown to be more effective in generating synthetic speech compared to the traditional method of concatenative synthesis in many aspects \cite{SPSS}. Statistical parametric approaches producing speech parameters based on statistical models instead of concatenating speech units makes voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets. In our work, we use CLUSTERGEN synthesizer \cite{clustergen} which is a statistical parametric speech synthesis method implemented within the Festival/FestVox voice building environment \cite{festvox:2014}.
+Statistical parametric speech synthesis has been shown to be more effective in generating synthetic speech compared to the traditional method of concatenative synthesis in many aspects \cite{SPSS}. By producing speech parameters based on statistical models instead of concatenating speech units, statistical parametric approaches  make voice characteristics easier to modify. Concatenative synthesis requires that the entire corpus be spoken by the same speaker while parametric synthesis learns average statistics about what speech sounds like, thus, we can train voices on data that contains many speakers, recording conditions, and speaking styles. This makes statistical parametric speech synthesis more appropriate for synthesizing voices from crowdsourced datasets. In our work, we use CLUSTERGEN synthesizer, \cite{clustergen} which is a statistical parametric speech synthesis method implemented within the Festival/FestVox voice building environment \cite{festvox:2014}.
 
 CLUSTERGEN synthesizer is divided into two parts, training and synthesis. However, before the training part can take place, a step of labeling data is required. Labeling data is to align the phonemes generated from the transcripts with the audios. This process is done by using an HMM labeler with a 3-state HMM model built for each phone.
 
@@ -147,10 +147,10 @@ At synthesis time, a phoneme sequence is generated from the text, then an HMM st
 \subsection{Tools}
 
 \subsubsection{Festival Speech Synthesis}
-Festival/FestVox \cite{festvox:2014} serves as a general framework for building speech synthesis systems. It offers a full text to speech system with various APIs, as well as an environment for development and research of speech synthesis techniques. CLUSTERGEN synthesizer is a new synthesis technique added to the FestVox suite of voice building tools. Festival/FestVox allows users to synthesize speech in multiple languages such as English (British and American), and Spanish. It is a free software and includes a step-by-step tutorial with examples in a document called “Building Synthetic Voices”.
+Festival/FestVox \cite{festvox:2014} serves as a general framework for building speech synthesis systems. It offers a full text-to-speech system with various APIs, as well as an environment for development and research of speech synthesis techniques. CLUSTERGEN synthesizer is a new synthesis technique added to the FestVox suite of voice building tools. Festival/FestVox allows users to synthesize speech in multiple languages such as English (British and American), and Spanish. It is a free software and includes a step-by-step tutorial with examples in a document called “Building Synthetic Voices”.
 
 \subsubsection{Signal-to-noise ratio estimation}
-We compute SNR of speech recordings using Waveform Amplitude Distribution Analysis (WADA) \cite{wadaSnr}. WADA-SNR algorithm can estimate SNR without requiring a clean reference signal which is appropriate for our research because with crowdsourced datasets, we can not have the reference signals (clean speech recordings), only noisy recordings are available. Based on a published evaluation in \cite{supervisedSnr}, WADA-SNR algorithm has been shown to be more accurate than the standard NIST algorithm \cite{nistSnr}.
+We compute SNR of speech recordings using Waveform Amplitude Distribution Analysis (WADA) \cite{wadaSnr}. WADA-SNR algorithm can estimate SNR without requiring a clean reference signal which is appropriate for our research because with crowdsourced datasets, we cannot have the reference signals (clean speech recordings), only noisy recordings are available. Based on a published evaluation in \cite{supervisedSnr}, WADA-SNR algorithm has been shown to be more accurate than the standard NIST algorithm \cite{nistSnr}.
 
 \subsubsection{F0 estimation}
 Praat \cite{praat} is a free computer software package for speech analysis in phonetics. It offers a wide range of functions for processing speech, including pitch analysis. Praat is well documented and used widely in the field of speech signal processing. Many research used Praat to extract speech features or as reference methods.
@@ -158,15 +158,15 @@ Praat \cite{praat} is a free computer software package for speech analysis in ph
 \subsection{Datasets}
 
 \subsubsection{TTS datasets}
-The CMU\_ARCTIC databases \cite{cmrArctic} were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, US English single speaker databases designed for unit selection speech synthesis research. The databases consist of approximately one hour per speaker. We pick two of these databases, “cmu\_us\_rms\_arctic” and “cmu\_us\_clb\_arctic”, to use in our investigation. The first one is of a male speaker and the second one is of a female speaker.
+The CMU\_ARCTIC databases \cite{cmrArctic} were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, US English single speaker databases designed for unit selection speech synthesis research. The databases consist of approximately one hour per speaker. We pick two of these databases, “cmu\_us\_rms\_arctic” (renamed as arcticRms in our later investigation) and “cmu\_us\_clb\_arctic” (arcticClb), to use in our investigation. The first one is of a male speaker and the second one is of a female speaker.
 
-The CMU\_INDIC databases \cite{cmuIndic} were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, single speaker databases designed for corpus based speech synthesis research. They are covering major languages spoken in the Indian subcontinet. We also pick two of these databases, “cmu\_indic\_guj\_ad” and “cmu\_indic\_ben\_rm” to use in our investigation. The former is of a male speaker and contains about 1000 recordings. The latter is of a female speaker and contains about 500 recordings.
+The CMU\_INDIC databases \cite{cmuIndic} were constructed at the Language Technologies Institute at Carnegie Mellon University as phonetically balanced, single speaker databases designed for corpus based speech synthesis research. They are covering major languages spoken in the Indian subcontinet. We also pick two of these databases, “cmu\_indic\_guj\_ad” (indicGuj) and “cmu\_indic\_ben\_rm” (indicBen) to use in our investigation. The former is of a male speaker and contains about 1000 recordings. The latter is of a female speaker and contains about 500 recordings.
 
-JSUT (Japanese speech corpus of Saruwatari-lab., University of Tokyo) corpus \cite{jsut} is a Japanese corpus consisting of transcription and reading-style audios. The audio data is recorded in an anechoic room by a native Japanese female speaker. The whole corpus contains 10-hour speech divided into many subsets. We only use one subset named “basic5000” for our investigation. This subset contains 5000 recordings.
+JSUT (Japanese speech corpus of Saruwatari-lab., University of Tokyo) corpus \cite{jsut} is a Japanese corpus consisting of transcription and reading-style audios. The audio data is recorded in an anechoic room by a native Japanese female speaker. The whole corpus contains 10-hour speech divided into many subsets. We only use one subset named “basic5000” (jsutBasic) for our investigation. This subset contains 5000 recordings.
 
 JVS (Japanese versatile speech) corpus \cite{jvs} consists of Japanese text (transcripts) and multi-speaker voice data. The speech data is recorded in a studio by professional speakers. We use two subsets, jvs001 and jvs002, of two speakers, one male and one female. Each subset contains 100 recordings.
 
-SWARA - Mobile System for Rehabilitative Vocal Assistance of Surgical Aphonia \cite{swara} is one of the largest Romanian speech datasets freely available for both academic and commercial use. SWARA is a national project with the main objective of enabling speech impaired persons to use a fast, personalised text-to-speech synthesis system. The corpus amounts to approximately 21 hours of high-quality read speech data. We use two subsets of this corpus which are BAS (female speaker) and FDS (male speaker).
+SWARA - Mobile System for Rehabilitative Vocal Assistance of Surgical Aphonia \cite{swara} is one of the largest Romanian speech datasets freely available for both academic and commercial use. SWARA is a national project with the main objective of enabling speech impaired persons to use a fast, personalised text-to-speech synthesis system. The corpus amounts to approximately 21 hours of high-quality read speech data. We use two subsets of this corpus which are BAS (swaraBas) and FDS (swaraFds). These two subsets are of a female and male speaker, respectively.
 
 The SIWIS French Speech Synthesis Database \cite{siwis} includes high quality French speech recordings and associated text files, aimed at building TTS systems. A total of 9750 utterances from various sources such as parliament debates and novels were uttered by a professional French voice talent. The database is divided into 5 parts. Part 1 which contains 4500 recordings is used in our investigation.
 
@@ -191,7 +191,7 @@ We started off the investigation of speech power by examining its distribution i
 
 Common Voice is a very large dataset containing 2500 hours of speech. Because we did not have enough time and resource to train voice using the whole dataset, we used only the first 2000 recordings of US accent for this investigation of speech power.
 
-To calculate power distribution of each dataset, we first calculated speech power of each recording using formula \ref{exp_power} and then calculated the mean and standard deviation of power for the whole dataset. The power distribution of each dataset (crowdsourced and TTS) is shown in Table \ref{tab_powerDistribution} and Figure \ref{fig_powerDistribution}.
+To calculate power distribution of each dataset, we first calculated speech power of each recording using formula \ref{exp_power} and then calculated the mean and standard deviation of power (std. power) for the whole dataset. The power distribution of each dataset (crowdsourced and TTS) is shown in Table \ref{tab_powerDistribution} and Figure \ref{fig_powerDistribution}.
 
 \begin{figure}[t]
 \begin{center}
@@ -208,17 +208,17 @@ To calculate power distribution of each dataset, we first calculated speech powe
 \caption{Power mean and standard deviation of TTS and crowdsourced datasets.}
 \label{tab_powerDistribution}
 \vspace{3mm}
-\begin{tabular}{lcc}
+\begin{tabular}{|l|l|l|}
 \hline
-Dataset & Power mean & Power standard deviation \\
+Dataset & Mean power & Std. power \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
 arcticRms   & 0.0058 & 0.0018 \\
 arcticClb   & 0.0193 & 0.0049 \\
 indicBen    & 0.0089 & 0.0031 \\
 indicGuj    & 0.0092 & 0.0028 \\
-jsutBasic   & 0.0028 & 0.000196 \\
-jvs001      & 0.0022 & 0.00052777 \\
-jvs002      & 0.0014 & 0.00036044 \\
+jsutBasic   & 0.0028 & $1.96\times10^{-4}$ \\
+jvs001      & 0.0022 & $5.28\times10^{-4}$ \\
+jvs002      & 0.0014 & $3.60\times10^{-4}$ \\
 swaraBas    & 0.0278 & 0.0084 \\
 swaraFds    & 0.0207 & 0.0069 \\
 siwis       & 0.0093 & 0.0026 \\
@@ -257,9 +257,11 @@ The intelligibility of each voice was assessed based on its WER. WERs of the two
 \caption{WER of synthetic voices before and after performing power normalization.}
 \label{tab_werPower}
 \vspace{3mm}
-\begin{tabular}{lcc}
+\begin{tabular}{l|l|l}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) \\
+\multirow{2}{4.5cm}{Voice} &
+\multicolumn{2}{c}{WER (\%)} \\ \cline{2-3}
+& Watson & wit.ai \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
 voice\_original          & 68.15          & 82.08 \\
 voice\_powerNormalized   & \textbf{60.53} & \textbf{75.51} \\
@@ -278,7 +280,7 @@ Because the cost of conducting subjective evaluation is high, we reduced the num
 \caption{Subjective evaluation of synthetic voices before and after performing power normalization.}
 \label{tab_subEvaPower}
 \vspace{3mm}
-\begin{tabular}{lc}
+\begin{tabular}{l|l}
 \hline
 Voice & Preference score (\%) \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}
@@ -333,16 +335,18 @@ The purpose of averaging was to make it easier when comparing among the voices. 
 \caption{WER of voices synthesized from 2000-recording dataset before and after removing lowest SNR recordings.}
 \label{tab_werSnr2000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{l|l|l|l}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
 Baseline          & 86.81 & 90.89 & 88.85 \\
-After remove 5\%  & 76.55 &	92.50 & 84.53 \\
-After remove 10\% & 73.89 & 81.41 & 77.65 \\
-After remove 15\% & 84.66 & 87.35 & 86.01 \\
-After remove 20\% & 84.23 & 87.62 & 85.93 \\
-After remove 25\% & 79.17 & 83.29 & 81.23 \\
+After removing 5\%  & 76.55 &	92.50 & \textbf{84.53} \\
+After removing 10\% & 73.89 & 81.41 & \textbf{77.65} \\
+After removing 15\% & 84.66 & 87.35 & \textbf{86.01} \\
+After removing 20\% & 84.23 & 87.62 & \textbf{85.93} \\
+After removing 25\% & 79.17 & 83.29 & \textbf{81.23} \\
 \hline
 \end{tabular}
 \end{center}
@@ -353,16 +357,18 @@ After remove 25\% & 79.17 & 83.29 & 81.23 \\
 \caption{WER of voices synthesized from 4000-recording dataset before and after removing lowest SNR recordings.}
 \label{tab_werSnr4000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{l|l|l|l}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
 Baseline          & 67.77 & 78.81 & 73.29 \\
-After remove 5\%  & 59.52 & 75.29 & 67.41 \\
-After remove 10\% & 62.58 & 72.41 & 67.50 \\
-After remove 15\% & 57.36 & 71.91 & 64.64 \\
-After remove 20\% & 57.11 & 72.30 & 64.71 \\
-After remove 25\% & 55.82 & 71.57 & 63.70 \\
+After remove 5\%  & 59.52 & 75.29 & \textbf{67.41} \\
+After remove 10\% & 62.58 & 72.41 & \textbf{67.50} \\
+After remove 15\% & 57.36 & 71.91 & \textbf{64.64} \\
+After remove 20\% & 57.11 & 72.30 & \textbf{64.71} \\
+After remove 25\% & 55.82 & 71.57 & \textbf{63.70} \\
 \hline
 \end{tabular}
 \end{center}
@@ -377,16 +383,19 @@ Subjective evaluation was also conducted as in the power investigation except th
 
 \begin{table}[]
 \begin{center}
-\caption{Preference score of voices synthesized from 2000- and 4000-recording datasets before and after removing low SNR recordings.}
+\caption{Preference score of voices synthesized from 2000 and 4000-recording datasets before and after removing low SNR recordings.}
 \label{tab_subEvaSnr}
 \vspace{3mm}
-\begin{tabular}{lcc}
+% \begin{tabular}{ >{\centering\arraybackslash}m{6cm}>{\centering\arraybackslash}m{3cm}>{\centering\arraybackslash}m{3cm} } 
+\begin{tabular}{l|m{2.8cm}|m{2.8cm}}
 \hline
-Voice & 2000-recording dataset & 4000-recording dataset \\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{2}{c}{Preference scrore (\%)} \\ \cline{2-3}
+& 2000-recording dataset & 4000-recording dataset \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-Baseline          & 31.06\% & 34.85\% \\
-After removing low SNR recordings  & \textbf{39.39\%} & \textbf{40.53\%} \\
-No preference & 29.55\% & 24.62\% \\
+Baseline          & 31.06 & 34.85 \\
+After removing low SNR recordings  & \textbf{39.39} & \textbf{40.53} \\
+No preference & 29.55 & 24.62 \\
 \hline
 \end{tabular}
 \end{center}
@@ -428,16 +437,18 @@ Objective evaluation results are shown in Table \ref{tab_werStdF02000} and \ref{
 \caption{WER of voices synthesized from 2000-recording dataset before and after removing highest stdF0 recordings.}
 \label{tab_werStdF02000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{l|l|l|l}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
 Baseline          & 65.54 & 76.37 & 70.96 \\
-After remove 5\%  & 58.74 & 73.69 & 66.22 \\
-After remove 10\% & 61.61 & 68.60 & 65.11 \\
-After remove 15\% & 64.12 & 73.48 & 68.80 \\
-After remove 20\% & 61.57 & 69.17 & 65.37 \\
-After remove 25\% & 63.14 & 72.39 & 67.77 \\
+After removing 5\%  & 58.74 & 73.69 & \textbf{66.22} \\
+After removing 10\% & 61.61 & 68.60 & \textbf{65.11} \\
+After removing 15\% & 64.12 & 73.48 & \textbf{68.80} \\
+After removing 20\% & 61.57 & 69.17 & \textbf{65.37} \\
+After removing 25\% & 63.14 & 72.39 & \textbf{67.77} \\
 \hline
 \end{tabular}
 \end{center}
@@ -447,16 +458,18 @@ After remove 25\% & 63.14 & 72.39 & 67.77 \\
 \caption{WER of voices synthesized from 4000-recording dataset before and after removing highest stdF0 recordings.}
 \label{tab_werStdF04000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{l|l|l|l}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
 Baseline          & 62.89 & 78.58 & 70.74 \\
-After remove 5\%  & 64.08 & 73.57 & 68.83 \\
-After remove 10\% & 59.85 & 76.46 & 68.16 \\
-After remove 15\% & 58.37 & 78.16 & 68.27 \\
-After remove 20\% & 59.63 & 72.07 & 65.85 \\
-After remove 25\% & 62.95 & 75.93 & 69.44 \\
+After removing 5\%  & 64.08 & 73.57 & \textbf{68.83} \\
+After removing 10\% & 59.85 & 76.46 & \textbf{68.16} \\
+After removing 15\% & 58.37 & 78.16 & \textbf{68.27} \\
+After removing 20\% & 59.63 & 72.07 & \textbf{65.85} \\
+After removing 25\% & 62.95 & 75.93 & \textbf{69.44} \\
 \hline
 \end{tabular}
 \end{center}
@@ -471,13 +484,15 @@ In subjective evaluation, two pairs of voices were evaluated. The first one comi
 \caption{Preference score of voices synthesized from 2000- and 4000-recording datasets before and after removing high stdF0 recordings.}
 \label{tab_subEvaStsF0}
 \vspace{3mm}
-\begin{tabular}{lcc}
+\begin{tabular}{l|m{2.8cm}|m{2.8cm}}
 \hline
-Voice & 2000-recording dataset & 4000-recording dataset \\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{2}{c}{Preference scrore (\%)} \\ \cline{2-3}
+& 2000-recording dataset & 4000-recording dataset \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-Baseline & 32.33\% & 33.67\% \\
-After removing high stdF0 recordings & 30.67\% & 30.67\% \\
-No preference & 37.00\% & 35.66\% \\
+Baseline & 32.33 & 33.67 \\
+After removing high stdF0 recordings & 30.67 & 30.67 \\
+No preference & 37.00 & 35.66 \\
 \hline
 \end{tabular}
 \end{center}
@@ -523,16 +538,18 @@ In subjective evaluation, two pairs of voices were evaluated. The first one comi
 \caption{WER of voices synthesized from 2000-recording dataset before and after removing highest transcribed noise recordings.}
 \label{tab_werTranscribedNoise2000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{l|l|l|l}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
 Baseline          & 68.15 & 82.08 & 75.12 \\
-After remove 5\%  & 70.95 & 75.57 & 73.26 \\
-After remove 10\% & 59.56 & 66.74 & 63.15 \\
-After remove 15\% & 65.68 & 75.12 & 70.40 \\
-After remove 20\% & 62.37 & 77.16 & 69.77 \\
-After remove 25\% & 71.63 & 77.22 & 74.43 \\
+After removing 5\%  & 70.95 & 75.57 & \textbf{73.26} \\
+After removing 10\% & 59.56 & 66.74 & \textbf{63.15} \\
+After removing 15\% & 65.68 & 75.12 & \textbf{70.40} \\
+After removing 20\% & 62.37 & 77.16 & \textbf{69.77} \\
+After removing 25\% & 71.63 & 77.22 & \textbf{74.43} \\
 \hline
 \end{tabular}
 \end{center}
@@ -543,16 +560,18 @@ After remove 25\% & 71.63 & 77.22 & 74.43 \\
 \caption{WER of voices synthesized from 4000-recording dataset before and after removing highest transcribed noise recordings.}
 \label{tab_werTranscribedNoise4000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{l|l|l|l}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
 Baseline          & 67.77 & 78.81 & 73.29 \\
-After remove 5\%  & 55.60 & 75.83 & 65.72 \\
-After remove 10\% & 59.94 & 78.41 & 69.18 \\
-After remove 15\% & 57.59 & 74.10 & 65.85 \\
-After remove 20\% & 55.37 & 72.86 & 64.12 \\
-After remove 25\% & 61.45 & 73.79 & 67.62 \\
+After removing 5\%  & 55.60 & 75.83 & \textbf{65.72} \\
+After removing 10\% & 59.94 & 78.41 & \textbf{69.18} \\
+After removing 15\% & 57.59 & 74.10 & \textbf{65.85} \\
+After removing 20\% & 55.37 & 72.86 & \textbf{64.12} \\
+After removing 25\% & 61.45 & 73.79 & \textbf{67.62} \\
 \hline
 \end{tabular}
 \end{center}
@@ -563,13 +582,16 @@ After remove 25\% & 61.45 & 73.79 & 67.62 \\
 \caption{Preference score of voices synthesized from 2000- and 4000-recording datasets before and after removing high transcribed noise recordings.}
 \label{tab_subEvaTranscribedNoise}
 \vspace{3mm}
-\begin{tabular}{lcc}
+\begin{tabular}{|l|m{2.8cm}|m{2.8cm}|}
 \hline
-Voice & 2000-recording dataset & 4000-recording dataset \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-Baseline & 22.22\% & 31.48\% \\
-After removing high stdF0 recordings & 45.68\% & 37.96\% \\
-No preference & 32.10\% & 30.56\% \\
+\multirow{2}{4cm}{Voice} &
+\multicolumn{2}{c}{Preference scrore (\%)} \\ \cline{2-3}
+& 2000-recording dataset & 4000-recording dataset \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+\hline
+Baseline & 22.22 & 31.48 \\
+After removing high stdF0 recordings & \textbf{45.68} & \textbf{37.96} \\
+No preference & 32.10 & 30.56 \\
 \hline
 \end{tabular}
 \end{center}
@@ -587,15 +609,17 @@ In the previous section, we investigated the effect of four factors which were s
 \caption{Summary of investigations of the four factors.}
 \label{tab_investigationsSummary}
 \vspace{3mm}
-\begin{tabular}{llc}
+\begin{tabular}{m{3.3cm}|m{8cm}|m{1.7cm}}
 \hline
-% Factor & Data processing & Effect on synthetic voices: improve or not? \\
-\multicolumn{1}{l}{Factor} & Dataset processing & \begin{tabular}[c]{@{}c@{}}Effect on synthetic voices:\\ improve or not?\end{tabular} \\
+Factor & Data processing & Improve synthetic voices? \\
+% \multirow{2}{3cm}{Factor} &
+% \multirow{2}{5cm}{Dataset processing} & Effect on synthetic voices: \\
+% && improve or not? \\
 \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-Speech power & Normalizing power of all recordings & Yes \\
+Speech power & Normalizing power of all recordings & \textbf{Yes} \\
 stdF0 & Removing high stdF0 recordings & No \\
-SNR & Removing low SNR recordings & Yes \\
-Transcribed noise & Removing high transcribed noise recordings & Yes \\
+SNR & Removing low SNR recordings & \textbf{Yes} \\
+Transcribed noise & Removing high transcribed noise recordings & \textbf{Yes} \\
 \hline
 \end{tabular}
 \end{center}
