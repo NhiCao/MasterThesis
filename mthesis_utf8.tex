@@ -115,7 +115,7 @@ In traditional TTS datasets, speakers are usually instructed to speak with a mod
 \subsection{Signal-to-noise ratio}
 Signal-to-noise ratio (SNR) is defined as the ratio of signal power to the noise power, often expressed in decibels (dB). SNR is computed as
 \begin{equation}\label{exp_SNR}
-    SNR = \frac{P_{signal}}{P_{noise}},
+    \text{SNR} = \frac{P_\text{signal}}{P_\text{noise}},
 \end{equation}
 where $P_{signal}$ and $P_{noise}$ are the signal power and the noise power, respectively. A ratio higher than 1:1 (greater than 0 dB) indicates more signal than noise.
 
@@ -205,25 +205,26 @@ To calculate power distribution of each dataset, we first calculated speech powe
 
 \begin{table}[]
 \begin{center}
-\caption{Power mean and standard deviation of TTS and crowdsourced datasets.}
+\caption{Mean and standard deviation of power in TTS and crowdsourced datasets.}
 \label{tab_powerDistribution}
 \vspace{3mm}
 \begin{tabular}{|l|l|l|}
 \hline
 Dataset & Mean power & Std. power \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-arcticRms   & 0.0058 & 0.0018 \\
-arcticClb   & 0.0193 & 0.0049 \\
-indicBen    & 0.0089 & 0.0031 \\
-indicGuj    & 0.0092 & 0.0028 \\
-jsutBasic   & 0.0028 & $1.96\times10^{-4}$ \\
-jvs001      & 0.0022 & $5.28\times10^{-4}$ \\
-jvs002      & 0.0014 & $3.60\times10^{-4}$ \\
-swaraBas    & 0.0278 & 0.0084 \\
-swaraFds    & 0.0207 & 0.0069 \\
-siwis       & 0.0093 & 0.0026 \\
-arabic      & 0.0238 & 0.0069 \\
-commonVoice & 0.0053 & 0.0111 \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+\hline
+arcticRms   & $5.80\times10^{-3}$ & $1.80\times10^{-3}$ \\
+arcticClb   & $1.93\times10^{-2}$ & $4.90\times10^{-3}$ \\
+indicBen    & $8.90\times10^{-3}$ & $3.10\times10^{-3}$ \\
+indicGuj    & $9.20\times10^{-3}$ & $2.80\times10^{-3}$ \\
+jsutBasic   & $2.80\times10^{-3}$ & $1.96\times10^{-4}$ \\
+jvs001      & $2.20\times10^{-3}$ & $5.28\times10^{-4}$ \\
+jvs002      & $1.40\times10^{-3}$ & $3.60\times10^{-4}$ \\
+swaraBas    & $2.78\times10^{-2}$ & $8.40\times10^{-3}$ \\
+swaraFds    & $2.07\times10^{-2}$ & $6.90\times10^{-3}$ \\
+siwis       & $9.30\times10^{-3}$ & $2.60\times10^{-3}$ \\
+arabic      & $2.38\times10^{-2}$ & $6.90\times10^{-3}$ \\
+commonVoice & $5.30\times10^{-3}$ & $1.11\times10^{-2}$ \\
 \hline
 \end{tabular}
 \end{center}
@@ -241,14 +242,14 @@ From Figure \ref{fig_powerDistribution}, it can be seen that the mean power of c
 \end{figure}
 The dataset created after the normalization has a new power distribution with mean of 0.0053 and standard deviation of $4.0554e-5$. Notice that the new standard deviation is almost 0.
 
-To see how the power normalization affects the quality of synthetic voice, we evaluated the voices synthesized from the dataset before and after the normalization by using both objective and subjective evaluation. The synthetic voices were named $voice\_original$ and $voice\_powerNormalized$, respectively.\\\\
+To see how the power normalization affects the quality of synthetic voice, we evaluated the voices synthesized from the dataset before and after the normalization by using both objective and subjective evaluation.\\\\
 \textbf{Objective evaluation}
 \vspace{0.28cm}\\
 Objective evaluation aiming to evaluate the intelligibility of the voices was conducted by using automatic speech recognition (ASR) APIs to recognize the synthetic speech. \cite{utteranceSelectionCooper2017} has shown a strong correlations between results from ASR APIs and those from human evaluation. We used two APIs for this task which were wit.ai \cite{witai}, a natural language API toolkit owned by Facebook, and Watson \cite{watson}, an IBM’s API for cognitive applications.
 
 The objective evaluation was conducted as follows. First, we synthesized 20 utterances for each voice. The sentences used for synthesizing utterances come from four different domains: novel, news, conversation and scientific papers (5 sentences per each domain, the list of the sentences can be found in appendix). The synthesized utterances were then recognized by the two APIs. After utterances were recognized, we computed word error rate (WER) for each voice. The WER of a voice was an average over the 20 WERs of the 20 utterances. WER of an utterance was computed as
 \begin{equation}\label{exp_wer}
-    WER = \frac{Substitutions + Insertions + Deletions}{Number\:of\:Words\:Spoken}.
+    \text{WER} = \frac{\text{Substitutions} + \text{Insertions} + \text{Deletions}}{\text{Number\:of\:Words\:Spoken}}.
 \end{equation}
 The intelligibility of each voice was assessed based on its WER. WERs of the two synthetic voices are shown in Table \ref{tab_werPower}.
 
@@ -257,14 +258,15 @@ The intelligibility of each voice was assessed based on its WER. WERs of the two
 \caption{WER of synthetic voices before and after performing power normalization.}
 \label{tab_werPower}
 \vspace{3mm}
-\begin{tabular}{l|l|l}
+\begin{tabular}{|l|l|l|}
 \hline
-\multirow{2}{4.5cm}{Voice} &
-\multicolumn{2}{c}{WER (\%)} \\ \cline{2-3}
+\multirow{2}{3.5cm}{Voice} &
+\multicolumn{2}{c|}{WER (\%)} \\ \cline{2-3}
 & Watson & wit.ai \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-voice\_original          & 68.15          & 82.08 \\
-voice\_powerNormalized   & \textbf{60.53} & \textbf{75.51} \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+\hline
+Original           & 68.15          & 82.08 \\
+Power normalized   & \textbf{60.53} & \textbf{75.51} \\
 \hline
 \end{tabular}
 \end{center}
@@ -277,16 +279,17 @@ Because the cost of conducting subjective evaluation is high, we reduced the num
 
 \begin{table}[]
 \begin{center}
-\caption{Subjective evaluation of synthetic voices before and after performing power normalization.}
+\caption{Preference score of voices synthesized before and after performing power normalization.}
 \label{tab_subEvaPower}
 \vspace{3mm}
-\begin{tabular}{l|l}
+\begin{tabular}{|l|l|}
 \hline
 Voice & Preference score (\%) \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}
-voice\_original         & 26.04 \\
-voice\_powerNormalized  & \textbf{54.17} \\
-No preference           & 19.79 \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}
+\hline
+Original          & 26.04 \\
+Power normalized  & \textbf{54.17} \\
+No preference     & 19.79 \\
 \hline
 \end{tabular}
 \end{center}
@@ -326,27 +329,28 @@ First, in the 2000-recording dataset, we calculated SNR value for each recording
 \vspace{0.28cm}\\
 Objective evaluation was conducted as in the power investigation except one more step on processing the WERs from the two APIs of each voice, namely computing the average of the two WERs as in the following formula:
 \begin{equation}\label{exp_averageWer}
-    WER = \frac{WER_{Watson} + WER_{witai}}{2}.
+    \text{WER}_{\text{average}} = \frac{\text{WER}_{\text{Watson}} + \text{WER}_{\text{witai}}}{2}.
 \end{equation}
 The purpose of averaging was to make it easier when comparing among the voices. Objective evaluation results are shown in Table \ref{tab_werSnr2000} and \ref{tab_werSnr4000} correspoding to 2000-recording and 4000-recording dataset. Notice that the two voices synthesized from the two original datasets are called baseline voices.
 
 \begin{table}[]
 \begin{center}
-\caption{WER of voices synthesized from 2000-recording dataset before and after removing lowest SNR recordings.}
+\caption{WER of voices synthesized from 2000-recording dataset before and after removing low SNR recordings.}
 \label{tab_werSnr2000}
 \vspace{3mm}
-\begin{tabular}{l|l|l|l}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\multirow{2}{4cm}{Voice} &
-\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
 & Watson & wit.ai & Average \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
-Baseline          & 86.81 & 90.89 & 88.85 \\
-After removing 5\%  & 76.55 &	92.50 & \textbf{84.53} \\
-After removing 10\% & 73.89 & 81.41 & \textbf{77.65} \\
-After removing 15\% & 84.66 & 87.35 & \textbf{86.01} \\
-After removing 20\% & 84.23 & 87.62 & \textbf{85.93} \\
-After removing 25\% & 79.17 & 83.29 & \textbf{81.23} \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
+\hline
+Baseline     & 86.81 & 90.89 & 88.85 \\
+5\% removed  & 76.55 &	92.50 & \textbf{84.53} \\
+10\% removed & 73.89 & 81.41 & \textbf{77.65} \\
+15\% removed & 84.66 & 87.35 & \textbf{86.01} \\
+20\% removed & 84.23 & 87.62 & \textbf{85.93} \\
+25\% removed & 79.17 & 83.29 & \textbf{81.23} \\
 \hline
 \end{tabular}
 \end{center}
@@ -354,21 +358,22 @@ After removing 25\% & 79.17 & 83.29 & \textbf{81.23} \\
 
 \begin{table}[]
 \begin{center}
-\caption{WER of voices synthesized from 4000-recording dataset before and after removing lowest SNR recordings.}
+\caption{WER of voices synthesized from 4000-recording dataset before and after removing low SNR recordings.}
 \label{tab_werSnr4000}
 \vspace{3mm}
-\begin{tabular}{l|l|l|l}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\multirow{2}{4cm}{Voice} &
-\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
 & Watson & wit.ai & Average \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
-Baseline          & 67.77 & 78.81 & 73.29 \\
-After remove 5\%  & 59.52 & 75.29 & \textbf{67.41} \\
-After remove 10\% & 62.58 & 72.41 & \textbf{67.50} \\
-After remove 15\% & 57.36 & 71.91 & \textbf{64.64} \\
-After remove 20\% & 57.11 & 72.30 & \textbf{64.71} \\
-After remove 25\% & 55.82 & 71.57 & \textbf{63.70} \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
+\hline
+Baseline     & 67.77 & 78.81 & 73.29 \\
+5\% removed  & 59.52 & 75.29 & \textbf{67.41} \\
+10\% removed & 62.58 & 72.41 & \textbf{67.50} \\
+15\% removed & 57.36 & 71.91 & \textbf{64.64} \\
+20\% removed & 57.11 & 72.30 & \textbf{64.71} \\
+25\% removed & 55.82 & 71.57 & \textbf{63.70} \\
 \hline
 \end{tabular}
 \end{center}
@@ -387,15 +392,16 @@ Subjective evaluation was also conducted as in the power investigation except th
 \label{tab_subEvaSnr}
 \vspace{3mm}
 % \begin{tabular}{ >{\centering\arraybackslash}m{6cm}>{\centering\arraybackslash}m{3cm}>{\centering\arraybackslash}m{3cm} } 
-\begin{tabular}{l|m{2.8cm}|m{2.8cm}}
+\begin{tabular}{|l|m{2.8cm}|m{2.8cm}|}
 \hline
 \multirow{2}{4cm}{Voice} &
-\multicolumn{2}{c}{Preference scrore (\%)} \\ \cline{2-3}
+\multicolumn{2}{c|}{Preference scrore (\%)} \\ \cline{2-3}
 & 2000-recording dataset & 4000-recording dataset \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-Baseline          & 31.06 & 34.85 \\
-After removing low SNR recordings  & \textbf{39.39} & \textbf{40.53} \\
-No preference & 29.55 & 24.62 \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+\hline
+Baseline                   & 31.06          & 34.85 \\
+Low SNR recordings removed & \textbf{39.39} & \textbf{40.53} \\
+No preference              & 29.55          & 24.62 \\
 \hline
 \end{tabular}
 \end{center}
@@ -434,42 +440,44 @@ After the voices were synthesized, we conducted objective and subjective evaluat
 Objective evaluation results are shown in Table \ref{tab_werStdF02000} and \ref{tab_werStdF04000}.
 \begin{table}[]
 \begin{center}
-\caption{WER of voices synthesized from 2000-recording dataset before and after removing highest stdF0 recordings.}
+\caption{WER of voices synthesized from 2000-recording dataset before and after removing high stdF0 recordings.}
 \label{tab_werStdF02000}
 \vspace{3mm}
-\begin{tabular}{l|l|l|l}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\multirow{2}{4cm}{Voice} &
-\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
 & Watson & wit.ai & Average \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
-Baseline          & 65.54 & 76.37 & 70.96 \\
-After removing 5\%  & 58.74 & 73.69 & \textbf{66.22} \\
-After removing 10\% & 61.61 & 68.60 & \textbf{65.11} \\
-After removing 15\% & 64.12 & 73.48 & \textbf{68.80} \\
-After removing 20\% & 61.57 & 69.17 & \textbf{65.37} \\
-After removing 25\% & 63.14 & 72.39 & \textbf{67.77} \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
+\hline
+Baseline     & 65.54 & 76.37 & 70.96 \\
+5\% removed  & 58.74 & 73.69 & \textbf{66.22} \\
+10\% removed & 61.61 & 68.60 & \textbf{65.11} \\
+15\% removed & 64.12 & 73.48 & \textbf{68.80} \\
+20\% removed & 61.57 & 69.17 & \textbf{65.37} \\
+25\% removed & 63.14 & 72.39 & \textbf{67.77} \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 \begin{table}[]
 \begin{center}
-\caption{WER of voices synthesized from 4000-recording dataset before and after removing highest stdF0 recordings.}
+\caption{WER of voices synthesized from 4000-recording dataset before and after removing high stdF0 recordings.}
 \label{tab_werStdF04000}
 \vspace{3mm}
-\begin{tabular}{l|l|l|l}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\multirow{2}{4cm}{Voice} &
-\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
 & Watson & wit.ai & Average \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
-Baseline          & 62.89 & 78.58 & 70.74 \\
-After removing 5\%  & 64.08 & 73.57 & \textbf{68.83} \\
-After removing 10\% & 59.85 & 76.46 & \textbf{68.16} \\
-After removing 15\% & 58.37 & 78.16 & \textbf{68.27} \\
-After removing 20\% & 59.63 & 72.07 & \textbf{65.85} \\
-After removing 25\% & 62.95 & 75.93 & \textbf{69.44} \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
+\hline
+Baseline     & 62.89 & 78.58 & 70.74 \\
+5\% removed  & 64.08 & 73.57 & \textbf{68.83} \\
+10\% removed & 59.85 & 76.46 & \textbf{68.16} \\
+15\% removed & 58.37 & 78.16 & \textbf{68.27} \\
+20\% removed & 59.63 & 72.07 & \textbf{65.85} \\
+25\% removed & 62.95 & 75.93 & \textbf{69.44} \\
 \hline
 \end{tabular}
 \end{center}
@@ -481,18 +489,19 @@ In subjective evaluation, two pairs of voices were evaluated. The first one comi
 
 \begin{table}[]
 \begin{center}
-\caption{Preference score of voices synthesized from 2000- and 4000-recording datasets before and after removing high stdF0 recordings.}
+\caption{Preference score of voices synthesized from 2000 and 4000-recording datasets before and after removing high stdF0 recordings.}
 \label{tab_subEvaStsF0}
 \vspace{3mm}
-\begin{tabular}{l|m{2.8cm}|m{2.8cm}}
+\begin{tabular}{|l|m{2.8cm}|m{2.8cm}|}
 \hline
 \multirow{2}{4cm}{Voice} &
-\multicolumn{2}{c}{Preference scrore (\%)} \\ \cline{2-3}
+\multicolumn{2}{c|}{Preference scrore (\%)} \\ \cline{2-3}
 & 2000-recording dataset & 4000-recording dataset \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
-Baseline & 32.33 & 33.67 \\
-After removing high stdF0 recordings & 30.67 & 30.67 \\
-No preference & 37.00 & 35.66 \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+\hline
+Baseline                      & 32.33 & 33.67 \\
+High stdF0 recordings removed & 30.67 & 30.67 \\
+No preference                 & 37.00 & 35.66 \\
 \hline
 \end{tabular}
 \end{center}
@@ -535,21 +544,22 @@ In subjective evaluation, two pairs of voices were evaluated. The first one comi
 
 \begin{table}[]
 \begin{center}
-\caption{WER of voices synthesized from 2000-recording dataset before and after removing highest transcribed noise recordings.}
+\caption{WER of voices synthesized from 2000-recording dataset before and after removing high transcribed noise recordings.}
 \label{tab_werTranscribedNoise2000}
 \vspace{3mm}
-\begin{tabular}{l|l|l|l}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\multirow{2}{4cm}{Voice} &
-\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
 & Watson & wit.ai & Average \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
-Baseline          & 68.15 & 82.08 & 75.12 \\
-After removing 5\%  & 70.95 & 75.57 & \textbf{73.26} \\
-After removing 10\% & 59.56 & 66.74 & \textbf{63.15} \\
-After removing 15\% & 65.68 & 75.12 & \textbf{70.40} \\
-After removing 20\% & 62.37 & 77.16 & \textbf{69.77} \\
-After removing 25\% & 71.63 & 77.22 & \textbf{74.43} \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
+\hline
+Baseline     & 68.15 & 82.08 & 75.12 \\
+5\% removed  & 70.95 & 75.57 & \textbf{73.26} \\
+10\% removed & 59.56 & 66.74 & \textbf{63.15} \\
+15\% removed & 65.68 & 75.12 & \textbf{70.40} \\
+20\% removed & 62.37 & 77.16 & \textbf{69.77} \\
+25\% removed & 71.63 & 77.22 & \textbf{74.43} \\
 \hline
 \end{tabular}
 \end{center}
@@ -557,21 +567,22 @@ After removing 25\% & 71.63 & 77.22 & \textbf{74.43} \\
 
 \begin{table}[]
 \begin{center}
-\caption{WER of voices synthesized from 4000-recording dataset before and after removing highest transcribed noise recordings.}
+\caption{WER of voices synthesized from 4000-recording dataset before and after removing high transcribed noise recordings.}
 \label{tab_werTranscribedNoise4000}
 \vspace{3mm}
-\begin{tabular}{l|l|l|l}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\multirow{2}{4cm}{Voice} &
-\multicolumn{3}{c}{WER (\%)} \\ \cline{2-4}
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
 & Watson & wit.ai & Average \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
-Baseline          & 67.77 & 78.81 & 73.29 \\
-After removing 5\%  & 55.60 & 75.83 & \textbf{65.72} \\
-After removing 10\% & 59.94 & 78.41 & \textbf{69.18} \\
-After removing 15\% & 57.59 & 74.10 & \textbf{65.85} \\
-After removing 20\% & 55.37 & 72.86 & \textbf{64.12} \\
-After removing 25\% & 61.45 & 73.79 & \textbf{67.62} \\
+% \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
+\hline
+Baseline     & 67.77 & 78.81 & 73.29 \\
+5\% removed  & 55.60 & 75.83 & \textbf{65.72} \\
+10\% removed & 59.94 & 78.41 & \textbf{69.18} \\
+15\% removed & 57.59 & 74.10 & \textbf{65.85} \\
+20\% removed & 55.37 & 72.86 & \textbf{64.12} \\
+25\% removed & 61.45 & 73.79 & \textbf{67.62} \\
 \hline
 \end{tabular}
 \end{center}
@@ -579,18 +590,18 @@ After removing 25\% & 61.45 & 73.79 & \textbf{67.62} \\
 
 \begin{table}[]
 \begin{center}
-\caption{Preference score of voices synthesized from 2000- and 4000-recording datasets before and after removing high transcribed noise recordings.}
+\caption{Preference score of voices synthesized from 2000 and 4000-recording datasets before and after removing high transcribed noise recordings.}
 \label{tab_subEvaTranscribedNoise}
 \vspace{3mm}
 \begin{tabular}{|l|m{2.8cm}|m{2.8cm}|}
 \hline
 \multirow{2}{4cm}{Voice} &
-\multicolumn{2}{c}{Preference scrore (\%)} \\ \cline{2-3}
+\multicolumn{2}{c|}{Preference scrore (\%)} \\ \cline{2-3}
 & 2000-recording dataset & 4000-recording dataset \\
 % \cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
 \hline
 Baseline & 22.22 & 31.48 \\
-After removing high stdF0 recordings & \textbf{45.68} & \textbf{37.96} \\
+High transcribed noise recordings removed & \textbf{45.68} & \textbf{37.96} \\
 No preference & 32.10 & 30.56 \\
 \hline
 \end{tabular}
@@ -606,16 +617,14 @@ In the previous section, we investigated the effect of four factors which were s
 
 \begin{table}[]
 \begin{center}
-\caption{Summary of investigations of the four factors.}
+\caption{Effectiveness of the four factors in improving synthetic voices.}
+% \caption{Summary of investigations of the four factors.}
 \label{tab_investigationsSummary}
 \vspace{3mm}
-\begin{tabular}{m{3.3cm}|m{8cm}|m{1.7cm}}
+\begin{tabular}{|m{3.2cm}|m{8cm}|m{1.8cm}|}
 \hline
-Factor & Data processing & Improve synthetic voices? \\
-% \multirow{2}{3cm}{Factor} &
-% \multirow{2}{5cm}{Dataset processing} & Effect on synthetic voices: \\
-% && improve or not? \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+Factor & Data processing & Effective? \\
+\hline
 Speech power & Normalizing power of all recordings & \textbf{Yes} \\
 stdF0 & Removing high stdF0 recordings & No \\
 SNR & Removing low SNR recordings & \textbf{Yes} \\
@@ -626,11 +635,11 @@ Transcribed noise & Removing high transcribed noise recordings & \textbf{Yes} \\
 \end{table}
 
 %-----------------------------------------------------------------
-% EVALUATING THE QUALITY OF CROWDSOURCED DATASETS AND PERFORMING DATASET PROCESSING
+% EVALUATING THE QUALITY OF CROWDSOURCED DATASETS AND PERFORMING DATASET CLEANING
 %-----------------------------------------------------------------
 
 \clearpage
-\section{Evaluating the Quality of Crowdsourced Datasets and Performing Dataset Processing}\label{sec_evaluateAndDataCleaning}
+\section{Evaluating the Quality of Crowdsourced Datasets and Performing Dataset Cleaning}\label{sec_evaluateAndDataCleaning}
 In this section, we focus on evaluating the quality of crowdsourced speech datasets using the three effective factors, namely speech power, SNR and transcribed noise, and performing appropriate processings on the datasets to improve the quality of synthetic voices.
 
 The investigations in section \ref{sec_investigations} have proved the effectiveness of the three factors, however, in cases of SNR and transcribed noise, we would encounter confusion when dealing with how much data should be removed to make the new dataset produce the best voice. This is because, as can be seen from the objective evaluation results, the amount of data should be removed to produce the best voice depends on the size of dataset. Our research aims to evaluate the quality of an arbitrary dataset, so in this section, we continue conducting two investigations for SNR and transcribed noise aiming to determine the thresholds of SNR and WER to remove bad data of each type.
@@ -642,13 +651,15 @@ The investigation was conducted on two datasets which were, again, two subsets o
 
 \begin{table}[]
 \begin{center}
-\caption{Word error rates of voices synthesized from 2000 and 4000-recording dataset before and after removing data based on different SNR thresholds.}
+\caption{Word error rates of voices synthesized from 2000 and 4000-recording dataset before and after removing low SNR recordings based on different SNR thresholds.}
 \label{tab_werSnrThresh}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{|l|l|l|}
 \hline
-SNR threshold & Average WER – 2000-recording dataset (\%) & Average WER – 4000-recording dataset\\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+\multirow{2}{1.7cm}{Voice} &
+\multicolumn{2}{c|}{Average WER (\%)} \\ \cline{2-3}
+& 2000-recording dataset & 4000-recording dataset \\
+\hline
 Original & 88.85 & 73.29\\
 10 dB    & 88.95 & 72.76\\
 15 dB    & 86.53 & 66.06\\
@@ -692,13 +703,15 @@ The investigation was conducted on two datasets, a 2000 and a 4000-recording dat
 
 \begin{table}[]
 \begin{center}
-\caption{Word error rates of voices synthesized from 2000 and 4000-recording dataset before and after removing data based on different WER thresholds.}
+\caption{Word error rates of voices synthesized from 2000 and 4000-recording dataset before and after removing high transcribed noise recordings based on different WER thresholds.}
 \label{tab_werWerThresh}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{|l|l|l|}
 \hline
-WER threshold & Average WER – 2000-recording dataset (\%) & Average WER – 4000-recording dataset\\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}
+\multirow{2}{1.7cm}{Voice} &
+\multicolumn{2}{c|}{Average WER (\%)} \\ \cline{2-3}
+& 2000-recording dataset & 4000-recording dataset \\
+\hline
 Original & 75.12 & 73.29\\
 90\%     & 72.49 & 66.09\\
 80\%     & 71.23 & 70.81\\
@@ -790,12 +803,14 @@ Subjective evaluation was also conducted as in previous investigations. Results 
 \caption{WER of voices synthesized from 2000-recording dataset before and after performing dataset cleaning.}
 \label{tab_werCombination2000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{|l|l|l|l|}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
-Original            & 68.15 & 82.08 & 75.12 \\
-After dataset cleaning & 58.36 & 72.42 & 65.39 \\
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
+\hline
+Original        & 68.15 & 82.08 & 75.12 \\
+Dataset cleaned & 58.36 & 72.42 & \textbf{65.39} \\
 \hline
 \end{tabular}
 \end{center}
@@ -806,12 +821,12 @@ After dataset cleaning & 58.36 & 72.42 & 65.39 \\
 \caption{Preference score of voices synthesized from 2000-recording dataset before and after performing dataset cleaning.}
 \label{tab_subEvaCombination2000}
 \vspace{3mm}
-\begin{tabular}{lc}
+\begin{tabular}{|l|l|}
 \hline
 Voice & Preference score (\%) \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}
+\hline
 Original                & 16.35 \\
-After dataset cleaning  & \textbf{54.81} \\
+Dataset cleaned & \textbf{54.81} \\
 No preference           & 28.84 \\
 \hline
 \end{tabular}
@@ -854,18 +869,21 @@ Objective evaluation was conducted as in previous investigations. Results of obj
 \textbf{Subjective evaluation}
 \vspace{0.28cm}\\
 Subjective evaluation was also conducted as in previous investigations. Results of subjective evaluation are shown in Table \ref{tab_subEvaCombination4000}. From the results we can see that the dataset cleaning once again significantly improved the quality of the synthetic voice.
-
+% \vspace{-0.1cm}
 \begin{table}[]
 \begin{center}
 \caption{WER of voices synthesized from 4000-recording dataset before and after performing dataset cleaning.}
+\vspace{-0.1cm}
 \label{tab_werCombination4000}
 \vspace{3mm}
-\begin{tabular}{lccc}
+\begin{tabular}{|l|l|l|l|}
 \hline
-Voice & WER – Watson (\%) & WER – witai (\%) & WER – average (\%)\\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}\cmidrule(l{0pt}r{2pt}){3-3}\cmidrule(l{0pt}r{2pt}){4-4}
+\multirow{2}{2.5cm}{Voice} &
+\multicolumn{3}{c|}{WER (\%)} \\ \cline{2-4}
+& Watson & wit.ai & Average \\
+\hline
 Original            & 67.77 & 78.81 & 73.29 \\
-After dataset cleaning & 53.42 & 75.93 & 64.68 \\
+Dataset cleaned & 53.42 & 75.93 & 64.68 \\
 \hline
 \end{tabular}
 \end{center}
@@ -876,12 +894,12 @@ After dataset cleaning & 53.42 & 75.93 & 64.68 \\
 \caption{Preference score of voices synthesized from 4000-recording dataset before and after performing dataset cleaning.}
 \label{tab_subEvaCombination4000}
 \vspace{3mm}
-\begin{tabular}{lc}
+\begin{tabular}{|l|l|}
 \hline
 Voice & Preference score (\%) \\
-\cmidrule(l{0pt}r{2pt}){1-1}\cmidrule(l{0pt}r{2pt}){2-2}
+\hline
 Original                & 18.27 \\
-After dataset cleaning  & \textbf{54.81} \\
+Dataset cleaned  & \textbf{54.81} \\
 No preference           & 26.92 \\
 \hline
 \end{tabular}
@@ -896,7 +914,8 @@ We experimented with evaluating data and performing dataset cleaning using three
 %-----------------------------------------------------------------
 % CONCLUTION
 %-----------------------------------------------------------------
-\newpage
+\clearpage
+
 \section{Conclusion}\label{sec_conclusion}
 We have investigated factors that might help improve the quality of voices synthesized from crowdsourced datasets, from that we introduced appropriate policies to process the dataset before training voices. We explored that three factors, namely speech power, signal-to-noise ratio (SNR) and transcribed noise, do affect the quality of synthetic voices. We also determined the thresholds to remove bad data of each factor, namely 30 dB for SNR and 35\% for word error rate (WER) in case of transcribed noise. This means that recordings with SNR values lower than 30 dB or WER values higher than 35\% should be removed from the dataset. In addition, we found that with datasets that have high standard deviation of power, normalizing power of all recordings to the mean power helps improve the quality of synthetic voices. We also conducted experiments with evaluating data and performing dataset cleaning using the three factors. Results from these experiments showed that the synthetic voices are significantly improved.
 
