@@ -49,7 +49,7 @@ Usually, to synthesize a high-quality voice, it is required to have a dataset wh
 
 In our work, we aim to address three problems. First, we investigate what factors affect the quality of synthetic voices. Second, we evaluate the quality of the data based on these factors. Third, we perform appropriate processings on the dataset based on the evaluation in order to improve the quality of the synthetic voice.
 
-We find that speech power, signal-to-noise ratio and transcribed noise affect the quality of synthetic voices. Evaluating and performing appropriate processings on the dataset using these three factors can significantly improve the quality of the synthetic voice.
+We find that speech power, signal-to-noise ratio, and transcribed noise affect the quality of synthetic voices. Evaluating and performing appropriate processings on the dataset using these three factors can significantly improve the quality of synthetic voices.
 }
 \newpage
 
@@ -83,7 +83,7 @@ We find that speech power, signal-to-noise ratio and transcribed noise affect th
 %-----------------------------------------------------------------
 
 \section{Introduction}
-Speech synthesis or text-to-speech (TTS) is a technique that converts written text into artificial speech. This technique has been rapidly developed in the recent years and has already reached a level of almost human-like speech. However, there are still some problems remaining such as great resource consuming and costly datasets. My research aims to reduce the cost by using cheaper datasets.
+Speech synthesis or text-to-speech (TTS) is a technique that converts written text into artificial speech. This technique has been rapidly developed in the recent years and has already reached the level of almost human-like speech. However, there are still some problems remaining such as great resource consuming and costly datasets. My research aims to reduce the cost by using cheaper datasets.
 
 Usually, speech synthesis systems are trained on dedicated datasets that involve a great deal of time, effort, and expense to create. These datasets are recorded by a professional speaker in a single speaking style. The amount of data needed to train a speech synthesis system varies from several hours to tens of hours. Usually, the more data, the more intelligible and natural the synthetic voice. This means that to produce a high-quality synthetic voice, the speaker has to speak tens of hours and try to maintain his/her speaking style throughout the recording process. Moreover, the recording must be carried out in a quiet and anechoic chamber using high-quality devices.
 
@@ -193,16 +193,6 @@ Common Voice is a very large dataset containing 2500 hours of speech. Because we
 
 To calculate power distribution of each dataset, we first calculated speech power of each recording using formula \ref{exp_power} and then calculated the mean and standard deviation of power (std. power) for the whole dataset. The power distribution of each dataset (crowdsourced and TTS) is shown in Table \ref{tab_powerDistribution} and Figure \ref{fig_powerDistribution}.
 
-\begin{figure}[t]
-\begin{center}
-\includegraphics[scale=0.5]{image/powerDistributionInDatasets}
-\end{center}
-\vspace{-0.3cm}
-\caption[Power distribution in TTS and crowdsourced datasets.]{Power distribution of TTS and crowdsourced datasets.}
-\label{fig_powerDistribution}
-% \vspace{-0.3cm}
-\end{figure}
-
 \begin{table}[]
 \begin{center}
 \caption{Mean and standard deviation of power in TTS and crowdsourced datasets.}
@@ -229,6 +219,17 @@ commonVoice & $5.30\times10^{-3}$ & $1.11\times10^{-2}$ \\
 \end{tabular}
 \end{center}
 \end{table}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.9]{image/powerDistributionInDatasets}
+% \includegraphics[scale=0.6]{image/test3}
+\end{center}
+\vspace{-0.3cm}
+\caption[Power distribution in TTS and crowdsourced datasets.]{Power distribution of TTS and crowdsourced datasets.}
+\label{fig_powerDistribution}
+% \vspace{-0.3cm}
+\end{figure}
 
 From Figure \ref{fig_powerDistribution}, it can be seen that the mean power of crowdsourced dataset is acceptable compared to the other ones but its power variation is very much higher. As already mentioned in section \ref{sec_potentialFactors}, speakers in TTS datasets are usually instructed to speak as consistently as possible \cite{buildingCorpus} which means that they should not change their volume significantly. Therefore, we decided to normalize the power of all recordings in the dataset to see if this helps improve the quality of synthetic voices. The power normalization was performed by bringing power of all recordings in the dataset to the mean power. For each recording, the power was increased or decreased depending on it was lower or higher than the mean, respectively. Figure \ref{fig_normalizingPower} shows the steps of performing power normalization.
 \begin{figure}[t]
@@ -382,7 +383,7 @@ Baseline     & 67.77 & 78.81 & 73.29 \\
 In the tables, the values in bold are the better ones compared to the baselines. A voice that has average WER lower than its baseline means it is more intelligible. We can see that, after removing recordings with lowest SNRs, the synthetic voices almost completely outperformed the baseline ones in both datasets. In other words, removing low SNR recordings did help improve the intelligibility of synthetic voices.\\\\
 \textbf{Subjective evaluation}
 \vspace{0.28cm}\\
-Because subjective evaluation is expensive, we cannot compare all the 5 voices against the baseline. If we do so, this would lead to an enormous amount of work for evaluators in the listening test which would be so expensive to conduct. Instead, only the voice which performed the best in objective evaluation (the one with highest intelligibility or lowest WER) was chosen to compare with the baseline. So, in 2000-recording dataset, the baseline was compared with the voice synthesized after removing 10\% and in 4000-recording dataset, the one synthesized after removing 25\% was chosen to be evaluated against its baseline.
+Because subjective evaluation is expensive, we cannot compare all the 5 voices against the baseline. If we do so, this would lead to an enormous amount of work for evaluators in the listening test, which would be so expensive to conduct. Instead, only the voice which performed the best in objective evaluation (the one with highest intelligibility or lowest WER) was chosen to compare with the baseline. So, in 2000-recording dataset, the baseline was compared with the voice synthesized after removing 10\% and in 4000-recording dataset, the one synthesized after removing 25\% was chosen to be evaluated against its baseline.
 
 Subjective evaluation was also conducted as in the power investigation except this time, we used 12 sentences (instead of 8) which were, again, a subset of the 20 sentences used in objective evaluation. Results from 22 evaluators are shown in Table \ref{tab_subEvaSnr}.
 
@@ -612,7 +613,7 @@ Subjective evaluation results show improvements in quality for the voices synthe
 
 Combining objective and subjective evaluation results, we conclude that removing recordings with high transcribed noise does help improve the quality of synthetic voices.
 
-\subsection{Summary of the four investigations}
+\subsection{Summary of the investigations}
 In the previous section, we investigated the effect of four factors which were speech power, SNR, stdF0 and transcribed noise on the quality of voices synthesized from crowdsourced datasets. The results of these four investigations are summarized in Table \ref{tab_investigationsSummary}.
 
 \begin{table}[]
@@ -783,7 +784,7 @@ The next step which was also the last step was to evaluate the dataset using spe
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[scale=0.6]{image/powerDistributionCombination2000}
+\includegraphics[scale=0.9]{image/powerDistributionCombination2000}
 \end{center}
 \vspace{-0.3cm}
 \caption[Power distribution in 2000-recording dataset after performing dataset cleaning using transcribed noise factor in comparison with TTS datasets.]{Power distribution in 2000-recording dataset after performing dataset cleaning using transcribed noise factor in comparison with TTS datasets.}
@@ -856,7 +857,7 @@ Histogram of WER in the dataset after removing low SNR recordings is shown in Fi
 The new dataset had a normal mean power but a very high power standard deviation (Figure \ref{fig_powerDistributionCombination4000}), so we normalized power of all recordings to the mean power.
 \begin{figure}[t]
 \begin{center}
-\includegraphics[scale=0.6]{image/powerDistributionCombination4000}
+\includegraphics[scale=0.9]{image/powerDistributionCombination4000}
 \end{center}
 \vspace{-0.3cm}
 \caption[Power distribution of 4000-recording dataset after performing dataset cleaning using transcribed noise factor in comparison with TTS datasets.]{Power distribution of 4000-recording dataset after performing dataset cleaning using transcribed noise factor in comparison with TTS datasets.}
@@ -926,11 +927,17 @@ In the future, we will try to investigate some more factors that we hypothesize 
 % ACKNOWLEDGEMENTS
 %-----------------------------------------------------------------
 \acknowledgements
-This thesis would not have been possible without the support, encouragement and guidance of my supervisor, Professor Yoichi Yamashita. I would like to thank him for providing all of the necessary resources, giving me many valuable advice and always being patient with my research progress. I will always be tremendously grateful.
+This thesis would not have been possible without the support, encouragement and guidance of my supervisor, Professor Yoichi Yamashita. I would like to express my sincere gratitude to him for providing all of the necessary resources, giving me many valuable advice and always being patient with my research progress. I will always be tremendously grateful.
 
-I would also like to thank Assoc. Prof. Ryosuke Yamanishi, Assoc. Prof. Keisuke Imoto, and Asst. Prof. Takahiro Fukumori for 
+Besides my supervisor, I would like to thank Assoc. Prof. Ryosuke Yamanishi, Assoc. Prof. Keisuke Imoto, and Asst. Prof. Takahiro Fukumori for their thoughtful comments and suggestions on my research.
 
-I would also like to thank all my lab members who supported me greatly and were always willing to help me.
+I would also like to thank Dr. Duy Khanh Ninh for suggesting me the idea of this research. I am so grateful to him for encouraging me to apply to graduate school, and for introducing me to Prof. Yamashita.
+
+I am grateful to all my lab members who have always supported me over the years. I greatly appreciate the time and effort they spend participating in my experiments.
+
+Last but not the least, I would like to express my special thanks to the Japanese Government (MEXT) Scholarship for giving me the opportunity to study master's degree in Japan. I would not have been able to pursue master study without generous supports from the scholarship.
+
+
 
 \newpage
 %-----------------------------------------------------------------
